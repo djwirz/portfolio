@@ -1,0 +1,17 @@
+---
+import Base from "../../layouts/Base.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import { displayName, projects } from "../../lib/record";
+---
+<Base
+  title={`Work: public projects by ${displayName}`}
+  description="Public projects, each rebuilding a problem from employer work that can't be shown: live demos, code, decisions and tests."
+>
+  <h1 class="text-3xl font-semibold tracking-tight">Work</h1>
+  <p class="mt-3 max-w-2xl text-muted-foreground">
+    Live projects first, then the ones being built or planned. Each card says which employer story it backs.
+  </p>
+  <div class="mt-8 grid gap-4 sm:grid-cols-2">
+    {projects.map((project) => <ProjectCard project={project} />)}
+  </div>
+</Base>

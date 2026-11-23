@@ -137,7 +137,7 @@ The judgment pass (the VWC Portfolio Checklist, read live when the scorer runs) 
 
 As Dan put it: most of the FHIR work is Propeller's, and the billing and eligibility projects are Kyros's.
 
-Statuses move fast: by the time this PR was written, FHIR over MCP had merged slice 2 and Coverage Check's and holdfast-ex's PR #1 had merged. Slice 1 records each project's status from its repo at that time, not from this table.
+Statuses move fast: by the time this PR was written, FHIR over MCP had merged slice 2 and Coverage Check's and holdfast-ex's PR #1 had merged. From slice 2 the record holds each project's status (`artifacts` and `in_flight` in `portfolio.json`), read from its repo on 2026-11-23, and the site shows what the record says, not this table.
 
 ## 9. GitHub (slice 5)
 **Every outward change is a separate step Dan approves**: creating a repo, changing a repo's settings, changing visibility, pinning. Claude prepares the exact change (the file, the command, the setting) and waits for a yes on each.

@@ -3,13 +3,14 @@
 Dan's public portfolio repo: the career record (`portfolio.json`, `brag/`, `case-studies/`, `decisions/`) and the static site built from it, in one repo (ADR 0002). One record, many views: the site, the GitHub profile README, the résumé and LinkedIn are all built from the record. Use they/them for Dan.
 
 ## Status
-Slice 1 of 5 (spec §13): the record is mirrored in, and an Astro skeleton (one placeholder page) builds and checks it. The record additions in `docs/record-additions.md` are waiting to be applied in `documents/`. Decisions and the go-live check are spec §14.
+Slice 2 of 5 (spec §13): home with project cards, /work/, a deep dive or short page for each project, and an /experience/ page for each employer story. Next: slice 3 (/resume/, /recruiters/, /about/, /contact/, /how-i-build/). Decisions and the go-live check are spec §14.
 
 ## Commands
 - Node 22.23+ (`.nvmrc` for CI), pnpm from `packageManager`.
 - `pnpm dev`, `pnpm build` (`astro check && astro build`; the build also runs the record checks in `src/lib/record.ts`), `pnpm preview`.
 - `pnpm record:copy`: mirrors the record from `~/projects/documents/portfolio/` (or `RECORD_SRC`). The only way record files change here.
-- New pages go in `src/lib/routes.ts` so they're in `sitemap.xml` (the kit's scorer fetches that exact path).
+- New static pages go in `src/lib/routes.ts` so they're in `sitemap.xml` (the kit's scorer fetches that exact path); pages built from the record are derived there already.
+- Case studies render through the `caseStudies` collection (`src/content.config.ts`). Each one's own `# ` title is its page's H1, so the page doesn't add another.
 
 ## How we work
 - Pull requests only; never push to `main`. Merged PRs are the project's record, and Friday Setup pulls them.
