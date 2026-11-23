@@ -8,6 +8,7 @@
     "onet_code": "15-1252.00",
     "summary": "I make other people's systems work with yours, in places where mistakes cost money or care. At Propeller Health I connected a Class II medical-device platform to Walgreens and Express Scripts and helped make its provider portal work inside Epic; at HYP I was one of two founding engineers on a real-time auction platform where no bid counted until a Stripe hold guaranteed it; at Kyros I automated monthly insurance eligibility checks for 1,000–2,000 patients. I work across backend, frontend, data and AWS, and I'm usually the engineer translating between partners, founders or operations staff and the code.",
     "location": "Eau Claire, WI",
+    "availability": "Full time, open to contract. Can start any time. Ideally remote, willing to discuss.",
     "email": "djwirz@gmail.com"
   },
   "links": {
@@ -105,8 +106,179 @@
       ]
     }
   ],
-  "artifacts": [],
-  "_artifacts_note": "Empty on purpose for now: public projects (GitHub, live demos) come in a later pass. Case studies of employer work live in case-studies/ and are not artifacts in the kit's sense, since there is no public repo or live link.",
+  "artifacts": [
+    {
+      "name": "Holdfast",
+      "one_liner": "Real-time auctions where a bid counts only once a Stripe test-mode hold covers it",
+      "status": "live",
+      "backs": [
+        {
+          "story": "real-time-bidding-stripe-holds",
+          "org": "HYP",
+          "label": "Stripe holds and real-time bidding"
+        }
+      ],
+      "url": "https://holdfast-production-ba968615.up.railway.app",
+      "repo": "https://github.com/djwirz/holdfast",
+      "depth": 3,
+      "skills": [
+        "TypeScript",
+        "Node.js",
+        "PostgreSQL",
+        "Stripe",
+        "Redis",
+        "Server-Sent Events",
+        "Playwright",
+        "OpenTelemetry",
+        "CI/CD"
+      ],
+      "evidence": [
+        "Load test of near-simultaneous bids with an invariant checker",
+        "End-to-end trace of one bid",
+        "ADRs 0001 to 0007",
+        "CI with unit, integration and Playwright tests"
+      ],
+      "case_study": "case-studies/holdfast.md"
+    },
+    {
+      "name": "Token Keeper",
+      "one_liner": "Keeps third-party account connections alive: OAuth tokens refreshed and re-verified on a schedule, state reported through one signed webhook",
+      "status": "live",
+      "backs": [
+        {
+          "story": "walgreens-fhir-integration",
+          "org": "Propeller Health",
+          "label": "Partner OAuth with Walgreens"
+        },
+        {
+          "story": "instagram-handle-verification",
+          "org": "HYP",
+          "label": "Instagram handle verification"
+        }
+      ],
+      "url": "",
+      "repo": "https://github.com/djwirz/token-keeper",
+      "depth": 3,
+      "skills": [
+        "Python",
+        "AWS Lambda",
+        "Amazon SQS",
+        "Amazon DynamoDB",
+        "Amazon EventBridge",
+        "AWS KMS",
+        "AWS CDK",
+        "OAuth",
+        "CI/CD",
+        "Observability"
+      ],
+      "evidence": [
+        "Concurrency test of the refresh lease",
+        "Alarm drills fired live against the deployed stack",
+        "ADRs 0001 to 0019",
+        "CI with OIDC deploys"
+      ],
+      "case_study": "case-studies/token-keeper.md"
+    }
+  ],
+  "in_flight": [
+    {
+      "name": "FHIR over MCP",
+      "one_liner": "A read-only, patient-scoped MCP server over synthetic FHIR data, with an eval suite that checks every claim",
+      "status": "building",
+      "backs": [
+        {
+          "story": "walgreens-fhir-integration",
+          "org": "Propeller Health",
+          "label": "Walgreens FHIR integration"
+        }
+      ],
+      "url": "",
+      "repo": "https://github.com/djwirz/fhir-over-mcp",
+      "depth": 1,
+      "skills": [
+        "Python",
+        "MCP",
+        "FHIR",
+        "Evals",
+        "LLM APIs"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Coverage Check",
+      "one_liner": "Bulk insurance eligibility checks against an unreliable, rate-limited payer, with FHIR output, on Kubernetes",
+      "status": "planned",
+      "backs": [
+        {
+          "story": "insurance-eligibility-automation",
+          "org": "Kyros",
+          "label": "Monthly insurance eligibility checks"
+        }
+      ],
+      "url": "",
+      "repo": "https://github.com/djwirz/coverage-check",
+      "depth": 0,
+      "skills": [
+        "Python",
+        "FastAPI",
+        "PostgreSQL",
+        "FHIR",
+        "Kubernetes",
+        "Docker"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "holdfast-ex",
+      "one_liner": "Holdfast's problem solved again in Elixir/OTP: one process per auction, an append-only event log, holds derived from state",
+      "status": "planned",
+      "backs": [
+        {
+          "story": "real-time-bidding-stripe-holds",
+          "org": "HYP",
+          "label": "Stripe holds and real-time bidding, told a second way"
+        }
+      ],
+      "url": "",
+      "repo": "https://github.com/djwirz/holdfast-ex",
+      "depth": 0,
+      "skills": [
+        "Elixir",
+        "OTP",
+        "Event sourcing",
+        "PostgreSQL",
+        "Stripe"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "Respiratory view",
+      "one_liner": "A SMART on FHIR app showing asthma and COPD patients' controller and rescue medication use, with an AI summary measured by evals",
+      "status": "next",
+      "backs": [
+        {
+          "story": "platform-consultant",
+          "org": "Propeller Health",
+          "label": "Provider portal and Epic"
+        },
+        {
+          "story": "walgreens-fhir-integration",
+          "org": "Propeller Health",
+          "label": "Inhaler data over FHIR"
+        }
+      ],
+      "url": "",
+      "repo": "",
+      "depth": 0,
+      "skills": [
+        "SMART on FHIR",
+        "OAuth",
+        "FHIR"
+      ],
+      "evidence": []
+    }
+  ],
+  "_artifacts_note": "Live public projects (deployed, depth 2 or more) go in artifacts. Projects still being built or planned go in in_flight, which the kit's scripts ignore, so planned work never counts as proof (portfolio repo ADR 0006). Employer stories live in case-studies/ and are not artifacts.",
   "education_line": "Hack Reactor, 2016. Chemistry and Biology coursework, University of Wisconsin–Madison, 2008–2012. About three years of research in the Biophysics Instrumentation Facility; co-author with Darrell R. McCaslin of the poster \"Exploitation of Variable Pathlength Spectroscopy for the Spectroscopic Characterization and Quantitation of Proteins and Peptides\".",
   "education": {
     "institution": "University of Wisconsin–Madison",

@@ -1,0 +1,51 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import { projects, projectSlug, statusOf, STATUS_LABEL, caseStudyTitle, type Project } from "../../lib/record";
+
+export async function getStaticPaths() {
+  const studies = await getCollection("caseStudies");
+  return projects.map((project) => {
+    const id = project.case_study?.split("/").pop()?.replace(/\.md$/, "");
+    return { params: { slug: projectSlug(project.name) }, props: { project, study: studies.find((s) => s.id === id) } };
+  });
+}
+
+const { project, study } = Astro.props as { project: Project; study?: Awaited<ReturnType<typeof getCollection<"caseStudies">>>[number] };
+const status = statusOf(project);
+const title = study ? caseStudyTitle(study.body) : project.name;
+const { Content } = study ? await render(study) : { Content: null };
+const spec = project.repo ? `${project.repo}/blob/main/docs/spec.md` : "";
+---
+<Base title={`${project.name}: ${project.one_liner}`} description={project.one_liner}>
+  <p class="text-sm text-muted-foreground"><a href="/work/" class="hover:underline">Work</a> · {project.name} · {STATUS_LABEL[status]}</p>
+  {!study && <h1 class="mt-2 text-3xl font-semibold tracking-tight">{title}</h1>}
+  <p class="mt-4 flex flex-wrap gap-4 text-sm font-medium">
+    {project.url && <a href={project.url} class="underline underline-offset-2">Live demo</a>}
+    {project.repo && <a href={project.repo} class="underline underline-offset-2">Code</a>}
+    {!study && spec && <a href={spec} class="underline underline-offset-2">Spec</a>}
+  </p>
+  {project.backs.length > 0 && (
+    <p class="mt-3 text-sm text-muted-foreground">
+      Backs:{" "}
+      {project.backs.map((b, i) => (
+        <>{i > 0 && "; "}<a href={`/experience/${b.story}/`} class="underline underline-offset-2">{b.label} at {b.org}</a></>
+      ))}
+    </p>
+  )}
+  {Content ? (
+    <div class="prose case-study mt-6"><Content /></div>
+  ) : (
+    <div class="prose mt-8">
+      <p>{project.one_liner}.</p>
+      <p>
+        Status: <strong>{STATUS_LABEL[status]}</strong>.
+        {status === "building" && " It's being built in thin slices, one pull request each, starting from a written spec and decision records."}
+        {status === "planned" && " The spec and decision records are written; the build hasn't started."}
+        {status === "next" && " It's next in line and not planned yet."}
+        {" "}The full deep dive comes when it ships.
+      </p>
+      {project.skills.length > 0 && <p>Planned stack: {project.skills.join(", ")}.</p>}
+    </div>
+  )}
+</Base>

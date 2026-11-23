@@ -2,7 +2,7 @@
 // `astro build`, so a broken record or private data can't reach a page (spec §10, ADR 0007).
 import { z } from "zod";
 import raw from "../../portfolio.json";
-import { parseBrag, type BragFile } from "./brag";
+import { parseBrag, slug, type BragFile } from "./brag";
 
 const Backs = z.object({ story: z.string(), org: z.string(), label: z.string() });
 
@@ -116,6 +116,11 @@ function load() {
     }
   }
 
+  for (const a of record.artifacts) {
+    const file = a.case_study ? base(a.case_study).replace(/\.md$/, "") : "";
+    if (file && !stories.has(file)) problems.push(`artifacts: ${a.name}'s case_study "${a.case_study}" doesn't exist`);
+  }
+
   if (problems.length) throw new Error(`The record has problems:\n- ${problems.join("\n- ")}`);
   return { record, brag };
 }
@@ -126,3 +131,29 @@ export const { record, brag } = load();
 export const displayName = record.profile.preferred_name
   ? `${record.profile.preferred_name} ${record.profile.name.split(" ").pop()}`
   : record.profile.name;
+
+// --- Projects and stories, for the pages (spec §5) ---
+
+const STATUS_ORDER = { live: 0, building: 1, planned: 2, next: 3 } as const;
+export const STATUS_LABEL = { live: "Live", building: "Building", planned: "Planned", next: "Next" } as const;
+export type Status = keyof typeof STATUS_LABEL;
+
+export const projectSlug = (name: string) => slug(name);
+export const statusOf = (p: Project): Status => p.status ?? "planned";
+
+/** Live projects first, then building, planned, next; lineup order within each. */
+export const projects: Project[] = [...record.artifacts, ...record.in_flight]
+  .map((p, i) => ({ p, i }))
+  .sort((a, b) => STATUS_ORDER[statusOf(a.p)] - STATUS_ORDER[statusOf(b.p)] || a.i - b.i)
+  .map(({ p }) => p);
+
+/** Case-study file names (without .md) that are project deep dives, not employer stories. */
+export const projectStories = new Set(
+  projects.flatMap((p) => (p.case_study ? [base(p.case_study).replace(/\.md$/, "")] : [])),
+);
+
+/** Projects whose "backs" names this employer story. */
+export const backedBy = (story: string) => projects.filter((p) => p.backs.some((b) => b.story === story));
+
+/** A case study's title: its first "# " line. */
+export const caseStudyTitle = (body: string | undefined) => /^#\s+(.+)$/m.exec(body ?? "")?.[1].trim() ?? "";

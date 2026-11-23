@@ -1,14 +1,22 @@
 ---
 import Base from "../layouts/Base.astro";
-import { record, displayName } from "../lib/record";
+import ProjectCard from "../components/ProjectCard.astro";
+import { record, displayName, projects } from "../lib/record";
 
-const { profile } = record;
-// A placeholder home: the cards and the rest arrive in slice 2 (spec §13).
+const { profile, links } = record;
+const person = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: displayName,
+  jobTitle: profile.target_role,
+  description: profile.headline,
+  address: { "@type": "PostalAddress", addressLocality: profile.location },
+  url: Astro.site?.href,
+  sameAs: [links.github, links.linkedin],
+};
 ---
-<Base
-  title={`${displayName}, ${profile.target_role}`}
-  description={profile.headline}
->
+<Base title={`${displayName}, ${profile.target_role}`} description={profile.headline}>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(person)} slot="head" />
   <p class="text-sm text-muted-foreground">{displayName}</p>
   <h1 class="mt-2 text-4xl font-semibold tracking-tight">{profile.target_role}</h1>
   <p class="mt-2 text-muted-foreground">{profile.location} · remote</p>
@@ -17,4 +25,14 @@ const { profile } = record;
     <a href="/work/" class="rounded-lg bg-primary px-4 py-2 text-primary-foreground">See the work</a>
     <a href="/recruiters/" class="rounded-lg border border-border px-4 py-2">Recruiter fast lane</a>
   </p>
+
+  <section class="mt-16" aria-labelledby="work-heading">
+    <h2 id="work-heading" class="text-2xl font-semibold tracking-tight">The work</h2>
+    <p class="mt-2 max-w-2xl text-muted-foreground">
+      Each public project rebuilds a problem from my employer work that can't be shown, with a spec, decisions written down, tests and CI. The live ones are deployed.
+    </p>
+    <div class="mt-6 grid gap-4 sm:grid-cols-2">
+      {projects.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </section>
 </Base>

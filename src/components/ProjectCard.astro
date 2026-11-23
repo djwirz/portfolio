@@ -1,0 +1,43 @@
+---
+import { projectSlug, statusOf, STATUS_LABEL, type Project } from "../lib/record";
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const status = statusOf(project);
+const deepDive = `/work/${projectSlug(project.name)}/`;
+---
+<article class="flex flex-col rounded-lg border border-border p-5">
+  <div class="flex flex-wrap items-center justify-between gap-2">
+    <h3 class="text-lg font-semibold"><a href={deepDive} class="hover:underline">{project.name}</a></h3>
+    <span class:list={["rounded-full px-2 py-0.5 text-xs font-medium", status === "live" ? "bg-primary text-primary-foreground" : "border border-border text-muted-foreground"]}>
+      {STATUS_LABEL[status]}
+    </span>
+  </div>
+  <p class="mt-2">{project.one_liner}</p>
+  {project.backs.length > 0 && (
+    <p class="mt-3 text-sm text-muted-foreground">
+      Backs:{" "}
+      {project.backs.map((b, i) => (
+        <>{i > 0 && "; "}<a href={`/experience/${b.story}/`} class="underline underline-offset-2">{b.label} at {b.org}</a></>
+      ))}
+    </p>
+  )}
+  {project.skills.length > 0 && (
+    <ul class="mt-3 flex flex-wrap gap-1.5" aria-label="Skills">
+      {project.skills.map((s) => <li class="rounded bg-muted px-2 py-0.5 text-xs">{s}</li>)}
+    </ul>
+  )}
+  {project.evidence.length > 0 && (
+    <ul class="mt-3 list-disc pl-5 text-sm">
+      {project.evidence.slice(0, 3).map((e) => <li>{e}</li>)}
+    </ul>
+  )}
+  <p class="mt-auto flex flex-wrap gap-4 pt-4 text-sm font-medium">
+    {project.url && <a href={project.url} class="underline underline-offset-2">Live demo</a>}
+    {project.repo && <a href={project.repo} class="underline underline-offset-2">Code</a>}
+    <a href={deepDive} class="underline underline-offset-2">Deep dive</a>
+  </p>
+</article>
