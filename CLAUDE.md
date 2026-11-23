@@ -10,6 +10,7 @@ Slice 3 of 5 (spec §13): every page in the header exists: home, /work/ and the 
 - `pnpm dev`, `pnpm build` (`astro check && astro build`; the build also runs the record checks in `src/lib/record.ts`), `pnpm preview`.
 - `pnpm record:copy`: mirrors the record from `~/projects/documents/portfolio/` (or `RECORD_SRC`). The only way record files change here.
 - New static pages go in `src/lib/routes.ts` so they're in `sitemap.xml` (the kit's scorer fetches that exact path); pages built from the record are derived there already.
+- Deploys: Cloudflare Workers with static assets (`wrangler.jsonc`, ADR 0008); `pnpm exec wrangler deploy --dry-run` checks the bundle without deploying. `pnpm-workspace.yaml` declines install scripts pnpm 12 asks about.
 - The preview server for the browser pane is `.claude/launch.json` (`portfolio-preview`).
 - `reading/*.md` holds /reading/ entries (front matter: title, author, kind, read as YYYY-MM, optional link; the body is Dan's thoughts). It's site content written here, not mirrored. `reading/_example.md` shows the format and is never published.
 - Case studies render through the `caseStudies` collection (`src/content.config.ts`). Each one's own `# ` title is its page's H1, so the page doesn't add another.

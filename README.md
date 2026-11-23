@@ -2,7 +2,7 @@
 
 Dan Wirz's career record and the site built from it. The record (`portfolio.json`, curated brag entries and case studies) is the source; the site, the GitHub profile, the résumé and LinkedIn are views of it. Each public project is shown beside the employer story it retells.
 
-**Status:** slice 3 of 5: every page builds from the record. Deploying comes in slice 4. Design: [docs/spec.md](docs/spec.md), [docs/artifact-spec.md](docs/artifact-spec.md) and [docs/adr/](docs/adr/).
+**Status:** slice 4 of 5: deploying to Cloudflare. Live at https://djwirz.withered-smoke-b9b4.workers.dev once this slice merges; not shared until the go-live check (spec §14). Design: [docs/spec.md](docs/spec.md), [docs/artifact-spec.md](docs/artifact-spec.md) and [docs/adr/](docs/adr/).
 
 ## How it fits together
 - **The record:** the [ai-era-job-kit](https://github.com/Vets-Who-Code/ai-era-job-kit)'s portfolio format, with two extra fields (`status`, `backs`) and an `in_flight` list for projects that haven't shipped ([ADR 0006](docs/adr/0006-status-and-backs-fields-and-in-flight-projects.md)).
@@ -31,19 +31,16 @@ pnpm build
 Then open a PR. `brag/inbox/` is never copied and is git-ignored. Fields the site needs that the record doesn't have yet are in [docs/record-additions.md](docs/record-additions.md).
 
 ## Deploy
-Cloudflare Pages, connected to this repo through its Git integration (ADRs 0004 and 0007). Merges to `main` deploy to production; each PR from this repo gets a preview URL as a status check. Project settings:
+Cloudflare Workers with static assets, built by Workers Builds from this repo (ADR 0008). Merges to `main` deploy to production at https://djwirz.withered-smoke-b9b4.workers.dev; other branches get preview builds on `*.workers.dev`. `wrangler.jsonc` serves `dist/`, with `src/pages/404.astro` as the not-found page. Settings in the Worker's Build settings:
 
 | Setting | Value |
 |---|---|
 | Production branch | `main` |
-| Framework preset | Astro (or None) |
 | Build command | `pnpm build` |
-| Build output directory | `dist` |
-| Root directory | `/` |
-| Environment variable `PNPM_VERSION` | `12.21.0` (the build image defaults to pnpm 10 and ignores `packageManager`) |
-| Environment variable `SITE_URL` | the production URL, for example `https://djwirz.pages.dev` |
+| Deploy command | `npx wrangler deploy` (the default; uses the Wrangler pinned in `package.json`) |
+| Build variable `SITE_URL` | `https://djwirz.withered-smoke-b9b4.workers.dev` |
 
-Node comes from `.nvmrc`. Response headers are in `public/_headers`. The link-preview image is `public/og.png`, drawn from `docs/og.svg`.
+Node comes from `.nvmrc`, and pnpm from `packageManager`. Response headers are in `public/_headers`. The link-preview image is `public/og.png`, drawn from `docs/og.svg`.
 
 ## Layout
 | Path | What |

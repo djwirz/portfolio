@@ -1,0 +1,8 @@
+---
+import Base from "../layouts/Base.astro";
+import { displayName } from "../lib/record";
+---
+<Base title={`Page not found: ${displayName}`} description="This page doesn't exist. The work, the résumé and contact details are a click away.">
+  <h1 class="text-3xl font-semibold tracking-tight">Page not found</h1>
+  <p class="mt-4 text-lg">That page doesn't exist. Try <a href="/work/" class="underline underline-offset-2">the work</a>, <a href="/resume/" class="underline underline-offset-2">the résumé</a> or <a href="/" class="underline underline-offset-2">the home page</a>.</p>
+</Base>

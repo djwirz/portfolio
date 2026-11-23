@@ -1,0 +1,6 @@
+# Install scripts pnpm asks about. Neither is needed: esbuild and workerd ship platform
+# binaries as optional dependencies, and an assets-only `wrangler deploy` runs neither
+# (checked with `wrangler deploy --dry-run`).
+allowBuilds:
+  esbuild: false
+  workerd: false

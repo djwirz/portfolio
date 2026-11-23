@@ -106,7 +106,7 @@ From `scripts/portfolio_audit.py` (read 2026-11-23). It fetches the home page, t
 
 | Check | How the site passes it |
 |---|---|
-| Site loads over HTTPS; HTML in under two seconds | Static files on Cloudflare Pages (ADR 0004) |
+| Site loads over HTTPS; HTML in under two seconds | Static files on Cloudflare (Workers static assets, ADR 0008) |
 | Page title; viewport meta; `lang` | Head tags on every page (§6) |
 | Content readable without JavaScript (about forty words or more in the raw HTML) | Pre-rendered pages (ADR 0003) |
 | One clear H1 | One H1 per page, in the shared layout |
@@ -168,7 +168,7 @@ Statuses move fast: by the time this PR was written, FHIR over MCP had merged sl
 
 ## 11. Testing, CI and deploy
 - **CI** (`.github/workflows/ci.yml`): gitleaks on every PR and push to `main` (from PR #1), and `astro build` on every PR from slice 1, so a bad record or a privacy hit fails before merge.
-- **Deploy:** Cloudflare Pages' Git integration builds on push to `main` and gives each PR a preview (ADR 0007). No deploy workflow and no secrets.
+- **Deploy:** Cloudflare Workers Builds builds on push to `main` and gives other branches a preview (ADRs 0007 and 0008). No deploy workflow and no secrets in GitHub.
 - **Page checks:** the kit's `portfolio_audit.py` against the live site, in the deploy slice and at go-live. Lighthouse once by hand on home, /work/ and /resume/.
 - **Unit tests:** only if a piece of logic earns them. The résumé projection is the likeliest candidate.
 
@@ -186,7 +186,7 @@ Statuses move fast: by the time this PR was written, FHIR over MCP had merged sl
 1. **The record and the site skeleton.** Write out the exact `documents/` additions (`status`, `backs`, `in_flight[]`, `profile.availability`; ADR 0006) for Dan or a documents session to apply, then copy the record in with the README's command. Astro with Tailwind; the shared layout (header, footer, head tags); `robots.txt` and `sitemap.xml`; the content schemas with the privacy checks (§10); `astro build` in CI. Delete the template's files, keeping what's worth keeping (ADR 0003). Not gated on the read-through (§14).
 2. **Home, /work/ and the deep dives.** Cards from `artifacts[]` and `in_flight[]`. `/work/<slug>/` from each project's case study; the two live projects get case studies written here, from the kit template and their repos' READMEs, ADRs and PR descriptions. Short pages for in-flight projects, and `/experience/<story>/` for the employer stories.
 3. **The rest of the pages:** /resume/ generated from the record (with a print stylesheet), /recruiters/, /about/, /contact/ and /how-i-build/. Each page about employer work is checked against the guardrails before the PR (§10).
-4. **Deploy, then a kit scorer run.** Connect Cloudflare Pages to the repo (Dan's steps, one at a time). Set `links.site` in `documents/`, then copy it in. Run `portfolio_audit.py --url <site> --portfolio portfolio.json` and the VWC checklist pass, then make the top fixes.
+4. **Deploy, then a kit scorer run.** Connect Cloudflare to the repo (Workers with static assets, ADR 0008) (Dan's steps, one at a time). Set `links.site` in `documents/`, then copy it in. Run `portfolio_audit.py --url <site> --portfolio portfolio.json` and the VWC checklist pass, then make the top fixes.
 5. **GitHub.** The `djwirz/djwirz` profile README, the profile website and bio, the pins, a website URL and topics on each of the five project repos, and the old-repo review list in `docs/github-review.md` (§9). **Each outward change is its own approval from Dan.**
 
 ## 14. Decisions, the go-live check, and what's still open
