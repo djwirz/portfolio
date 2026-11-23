@@ -1,0 +1,201 @@
+# Portfolio: spec
+
+Status: Draft for PR #1 · Date: 2026-11-23 · Owner: Dan
+
+The shape comes from a shaping session on 2026-11-23 (build-plan's `research/portfolio-shaping-2026-11-23.md`), modelled on the general idea of Jerome Hardaway's GitHub profile and site, not their look. Dan accepted all of its recommendations. The judgment behind the project is in [artifact-spec.md](artifact-spec.md).
+
+## 1. Problem
+Dan's strongest work (Walgreens and Express Scripts integrations at Propeller, Stripe-held real-time bidding at HYP, eligibility automation at Kyros) can't be shown: no public code, no live links. Since 2026-11-18, Dan has been building public projects that solve the same problems again in the open, each with a spec, ADRs, tests, CI and a deploy. Two are live and four more are on the way.
+
+Nothing yet ties them together. The career record that tells the story lives in a private folder, the GitHub profile is mostly old tutorials, and there's no site. A recruiter has no single place to see the role, the proof and a way to get in touch; a hiring manager can't see which public project backs which résumé line; and the kit's scorers have no site to read.
+
+This repo is that place: **one record, many views.** `portfolio.json`, `case-studies/` and `brag/entries/` are the source; the site, the GitHub profile README, the résumé and (last) LinkedIn are views of it. Adding a project means one entry in the record and one case study, and it then shows up everywhere.
+
+## 2. Non-goals (v1)
+- **A blog or writing section.** /writing/ waits for roadmap phase 8. Until then the scorer's "links to writing" check fails, on purpose.
+- **Testimonials or press**, until there are some.
+- **Role pages per job family**, until kit step 1 shows which lanes to target.
+- **A contact form** (ADR 0005), comments, or analytics beyond the host's own.
+- **Client-side interactivity by default** (ADR 0003). Anything interactive is an island and the page works without it.
+- **Editing the kit** or anything under `~/projects/documents`. The record is copied in; the kit is read, never changed.
+- **Résumé files** (PDF, DOCX). /resume/ is an HTML page that prints to PDF; tailored résumés are made with the kit, outside any git repo.
+
+## 3. Appetite
+- **Time:** about two to three days of sessions (roadmap phase 6), including each project's case study. With the spec-first, thin-slice method the build so far has gone faster than planned, but the parts that don't compress here are Dan's read-through of the record, writing the deep dives honestly, and each outward GitHub step.
+- **Money:** nothing. Free hosting tier, no domain at first.
+- **Shape:** nine thin PRs after this one (§13), each reviewable on its own preview URL from slice 2 on.
+- **If time runs short, cut in this order:** the /decisions/ index; the Shipped log's grouping and styling (a plain list stays); /how-i-build/ beyond one page of prose; the custom-domain step; the old-repo review (it's a list for Dan; doing it can wait).
+  **Never cut:** static HTML for every page, the record validation and privacy checks, the "Backs" link on every card, /recruiters/, /resume/, the contact path, and Dan's approval on every outward GitHub change.
+
+## 4. The record
+### Layout (from the kit's `templates/portfolio-repo/README.md`)
+```
+portfolio.json          master record: profile, links, experience, artifacts, in_flight, education, brag paths
+brag/
+  entries/*.md          curated, public-safe accomplishments (committed)
+  inbox/                raw Friday Setup pulls and unconfirmed claims (git-ignored, never committed)
+case-studies/*.md       employer stories, and one deep dive per public project
+decisions/*.md          the record's decision notes about employer work
+src/                    the site (Astro, ADR 0003)
+docs/                   this spec, the artifact spec, ADRs
+```
+
+### Where it comes from
+Slice 1 copies `~/projects/documents/portfolio/` in: `portfolio.json`, `brag/entries/`, `case-studies/` and `decisions/`. It's a copy. Nothing under `~/projects/documents` is edited, moved or deleted, and whether that copy is retired is Dan's call (§14, question 2). `brag/inbox/` isn't copied into git; it's ignored by `.gitignore` whatever lands there. **`documents/archive/` is never copied, quoted or summarized here.** It's read only to keep the site honest (§10).
+
+### Additions to the kit's format (ADR 0006)
+- **`status`** and **`backs`** on every project entry.
+- **`in_flight[]`**: Building, Planned and Next projects, with the same entry shape as `artifacts[]`. The kit's scripts ignore it, so planned work never reaches a résumé, LinkedIn score or screen grade as proof. A project moves to `artifacts[]` when it's deployed.
+
+An entry, for example:
+```json
+{
+  "name": "Holdfast",
+  "one_liner": "Real-time auctions where a bid counts only once a Stripe hold covers it",
+  "status": "live",
+  "backs": [{ "story": "real-time-bidding-stripe-holds", "org": "HYP", "label": "Stripe holds and real-time bidding" }],
+  "url": "https://holdfast-production-ba968615.up.railway.app",
+  "repo": "https://github.com/djwirz/holdfast",
+  "depth": 3,
+  "skills": ["TypeScript", "Node.js", "PostgreSQL", "Stripe", "Redis", "Playwright", "OpenTelemetry"],
+  "evidence": ["load test of near-simultaneous bids with an invariant checker", "end-to-end trace of one bid", "ADRs 0001–0007", "CI with E2E"],
+  "case_study": "case-studies/holdfast.md"
+}
+```
+Skill names on cards use the same names as the résumé (the kit's lexicon), so the scorers match them.
+
+## 5. Site map
+| Page | What's on it | Comes from |
+|---|---|---|
+| **Home** `/` | One H1 with the role ("Senior Software Engineer"), "Eau Claire, WI · remote", a two-line summary, buttons for "See the work" (/work/) and "Recruiter fast lane" (/recruiters/), the project cards in lineup order, the five newest Shipped log items | `profile`, `artifacts`, `in_flight`, `brag/entries` |
+| **/work/** | Every project as a card, live ones first, then Building, Planned, Next | `artifacts`, `in_flight` |
+| **/work/&lt;slug&gt;/** | The project's deep dive: its case study (kit `templates/case-study.md`: outcome-first title; live, code and skills line; context, role and constraints, key decisions with ADR links, what went wrong including where AI was wrong, result; evidence). In-flight projects get a short page: the one-liner, the status, what it backs, the repo and its spec | `case-studies/<slug>.md`, the entry |
+| **/experience/&lt;slug&gt;/** | An employer story (the nine case studies in the record), with a "Proved in public by" line linking back to the projects that back it | `case-studies/<story>.md`, reverse of `backs` |
+| **/resume/** | HTML résumé, generated from the record, that prints to PDF. Email, no phone. Projects from `artifacts[]` only | `profile`, `experience` with `highlights` → `brag/entries`, `artifacts`, `education` |
+| **/recruiters/** | Key facts (role, location, remote, availability, core skills), three proof links (Holdfast live, Token Keeper, FHIR over MCP's eval results once they exist), email and LinkedIn | `profile`, `artifacts`, `links` |
+| **/about/** | Bio: Propeller, HYP, Kyros, the family business, teaching at Reboot Kamp, the UW research and poster | `profile`, `experience`, `education` |
+| **/contact/** | Email (`mailto:`) and LinkedIn (ADR 0005) | `profile.email`, `links` |
+| **/how-i-build/** | The method: spec and ADRs as PR #1, thin local-first slices, a live proof for each deploy step, Claude Code writing and Dan reviewing, and where AI was wrong (with links to real PR descriptions) | written once |
+| **/shipped/** | The Shipped log: curated accomplishments with a public proof link, newest first | `brag/entries` |
+| *Later:* /decisions/, /writing/ | An index of every ADR across the project repos; case-study posts (phase 8) | each repo's `docs/adr/` |
+
+Every page has the same header (Work, Résumé, Recruiters, About, Contact) and a footer linking to GitHub, LinkedIn and /contact/, so every page has a contact path and a résumé link.
+
+### A project card
+| Shows | From |
+|---|---|
+| Name and one line | `name`, `one_liner` |
+| Status badge: Live · Building · Planned · Next | `status` |
+| "Backs: Stripe holds and real-time bidding at HYP" → /experience/&lt;story&gt;/ | `backs` |
+| Stack tags | `skills` |
+| Up to three proof bullets | `evidence` |
+| Links: Live · Code · Deep dive (only those that exist) | `url`, `repo`, `/work/<slug>/` |
+
+## 6. Build
+- **Astro, static output, TypeScript, Tailwind** (ADR 0003). No client JavaScript by default.
+- **Content collections** load `portfolio.json` and `case-studies/*.md` through zod schemas; `brag/entries/*.md` through a small parser of the kit's brag format (`## Org`, `### Accomplishment`, `- Impact:`, `- Skills:`, `- Portfolio artifact:`, `- Proof:`). Entries with `status: raw` are never read.
+- **Slugs** come from the record: a project's from its `name`, a story's from its file name.
+- **Head tags on every page:** `<html lang="en">`, a title of at least a few words, a description of a sentence or two, the viewport meta, an Open Graph title, description and image, and on home a JSON-LD `Person` built from `profile` and `links`.
+- **Generated files:** `sitemap.xml` (Astro's sitemap integration) and `robots.txt` allowing everything and pointing at the sitemap.
+- **Output:** `dist/<route>/index.html` for every page, plus assets.
+
+## 7. What the kit's portfolio scorer checks, and how the site passes
+From `scripts/portfolio_audit.py` (read 2026-11-23). It fetches the home page, then up to five same-site pages whose link matches `project|case|work|portfolio|artifact`, all as raw HTML.
+
+| Check | How the site passes it |
+|---|---|
+| Site loads over HTTPS; HTML in under two seconds | Static files on Cloudflare Pages (ADR 0004) |
+| Page title; viewport meta; `lang` | Head tags on every page (§6) |
+| Content readable without JavaScript (about forty words or more in the raw HTML) | Pre-rendered pages (ADR 0003); a post-build check enforces it |
+| One clear H1 | Home has exactly one H1; the post-build check enforces one per page |
+| States the role in the text | "Senior Software Engineer" in the home H1 |
+| Links to GitHub, LinkedIn | Header or footer on every page |
+| Has project or case-study pages | Home links to `/work/<slug>/`, which match the scorer's pattern |
+| Mentions live demos or deployed apps | Cards for live projects say "Live demo" |
+| Mentions decisions, tradeoffs or results; tests, CI or evals | Deep dives have "Key decisions" and "Result" and name the tests and CI |
+| All images have alt text | Post-build check |
+| Résumé link; contact path | `/resume/` in the header; `/contact/` in the footer |
+| Meta description (fifty characters or more); Open Graph image | Head tags (§6); one shared OG image |
+| JSON-LD Person | On home (§6) |
+| Not blocked from search; `robots.txt`; `sitemap.xml` at the host root | Generated (§6); served at the root (ADR 0004) |
+| Each deployed artifact is on the site and its live link loads | Every `artifacts[]` entry has a card on home, and its `url` is checked by CI's link check |
+| **Links to writing, talks or press** | **Fails until /writing/ exists** (phase 8). Accepted |
+| **Testimonials or endorsements** | **Fails** (a non-goal). Accepted |
+
+The judgment pass (the VWC Portfolio Checklist, read live when the scorer runs) happens in slice 7.
+
+## 8. The lineup (as of 2026-11-23)
+| Project | Status | Where in the record | Depth | Backs (employer story → case study) |
+|---|---|---|---|---|
+| **Holdfast** | Live on Railway | `artifacts` | 3 | HYP: Stripe holds and real-time bidding → `real-time-bidding-stripe-holds` |
+| **Token Keeper** | Live on AWS | `artifacts` | 3 | Propeller: Walgreens OAuth → `walgreens-fhir-integration`; HYP: Instagram verification → `instagram-handle-verification` |
+| **FHIR over MCP** | Building (slice 1 when this was planned) | `in_flight` | 1 | Propeller: Walgreens FHIR → `walgreens-fhir-integration` |
+| **Coverage Check** | Planned (PR #1 open when this was planned) | `in_flight` | 0 | Kyros: eligibility checks → `insurance-eligibility-automation` |
+| **holdfast-ex** | Planned (PR #1 open when this was planned) | `in_flight` | 0 | HYP, told a second way → `real-time-bidding-stripe-holds` |
+| **Respiratory view** | Next (not planned yet) | `in_flight` | 0 | Propeller: inhaler data, the provider portal and Epic → story to be chosen (§14) |
+
+Statuses move fast: by the time this PR was written, FHIR over MCP had merged slice 2 and Coverage Check's and holdfast-ex's PR #1 had merged. Slice 1 records each project's status from its repo at that time, not from this table.
+
+## 9. GitHub (slice 8 and slice 9)
+**Every outward change is a separate step Dan approves**: creating a repo, changing a repo's settings, changing visibility, pinning. Claude prepares the exact change (the file, the command, the setting) and waits for a yes on each.
+
+- **Profile README:** a new public repo, `djwirz/djwirz`, with a README from the kit's `templates/github-profile-readme.md`: one line on who Dan is; **What I've shipped** (Holdfast, Token Keeper, each with its live link and code); **Building now** (FHIR over MCP, Coverage Check, holdfast-ex); **How I work** in one line, linking to /how-i-build/; **Find me:** Portfolio · LinkedIn. Generated from `portfolio.json` by a small script in this repo, so it stays a view of the record. That repo is worked through PRs too.
+- **Profile settings:** the website field set to the site's URL (so `sync_check.py` passes "portfolio site on GitHub"); the bio checked against `profile.headline` and `target_role`.
+- **Pins:** the five project repos, in the site's order: Holdfast, Token Keeper, FHIR over MCP, Coverage Check, holdfast-ex.
+- **The five project repos:** a website URL on each (the live demo where there is one, otherwise its deep dive on the site) and topics named the way the market names the skills. Each repo is its own approval.
+- **Old public repos** (slice 9): a review list, one row per repo, with a suggested action (archive, make private, keep) and why. Dan decides each one, and each change is its own approval. The list covers every public repo that isn't one of the five projects: the twelve the shaping doc named (padre-ginos, bh-irv6, workout-app, workout-app-api, workout-app-api-enco, encore-workout-api, notion-api, notion-workout-api, notion-railway-api, rogers-photo-gallery, faura-take-home, cover-letter-ai) and about a dozen more that `gh repo list` also shows as public (cover-letter-generation, docker_postgres_with_data, code-challenge-100-plus, smart-on-fhir-tutorial, techScreen, sniptuck, DataStructures-Algorithms, hyper, Legit2.0, LoremIpsumElectron, greenfield-1, AWS_Tutorial, react-tutorial). Forks are flagged as forks.
+
+## 10. Privacy and honesty
+**Rules:**
+- Only what's in the public-safe record goes on the site. Employer names and facts only as the record states them.
+- `documents/archive/` (the guardrails, the never-claim list, the role files, private contact details) is read to keep the site honest and is never copied, quoted or summarized here, not even in PR descriptions.
+- No phone number, anywhere.
+- No employer code. Synthetic or public data only.
+- Numbers as honest estimates in words, never falsely precise figures. A number on the site must already be in the record.
+- In-flight projects never claim their skills as proven (ADR 0006).
+- Every page that retells employer work (deep dives, /about/, /experience/) is checked against the guardrails before its PR is opened, and the PR says it was.
+
+**What the build enforces** (slice 1 adds the checks, slice 2 runs them in CI):
+- `portfolio.json` matches its schema, including the ADR 0006 rules for `artifacts[]` and `in_flight[]`.
+- No `phone` key anywhere in the record.
+- Every `experience[].highlights` ref (`brag/entries/<file>#<slug>`) resolves to a `### heading`, and every `backs[].story` to a file in `case-studies/`.
+- No tracked file under `brag/inbox/`, and no brag file with `status: raw` outside it.
+
+## 11. Testing, CI and deploy
+- **From PR #1:** gitleaks on every PR and push to `main` (`.github/workflows/ci.yml`), default rules (`.gitleaks.toml`).
+- **From slice 1:** the record check (§10) as a script with unit tests, run in CI.
+- **From slice 2:** typecheck, build, and a post-build check over `dist/` (each page: text in the HTML, one H1, title, description, `lang`, alt text on every image; every internal link resolves). The resume projection and the Shipped log parser get unit tests.
+- **From slice 7:** preview deploy on every PR and production deploy on merge to `main` (ADR 0004); after deploy, a link check of every external link on the site (live demos, repos), and the kit's `portfolio_audit.py` run against the live URL with its report attached to the PR.
+- **Accessibility:** axe on home, /work/ and /resume/ in CI from slice 3.
+
+## 12. Acceptance criteria (v1 "done", depth 3)
+1. The record is in the repo, validated on every build; `brag/inbox/` has never been committed.
+2. Every page in §5 (except Later) exists as static HTML, with its text readable by `curl`.
+3. Every project in §8 has a card with its status and "Backs" link; the live ones have deep dives.
+4. /resume/ is generated from the record and prints to PDF.
+5. The site is deployed on HTTPS at the root of its host, with PR previews.
+6. The kit's portfolio scorer, automated and judgment passes, has been run on the live site; every fix it found is done or written down as deferred, with why.
+7. `sync_check.py --github djwirz` finds no mismatch for the portfolio site link or the pins.
+8. The profile README is live, the five repos are pinned with website URLs and topics, and the old-repo review list has Dan's decision on each row.
+
+## 13. Slice plan (one PR each, after this spec)
+1. **Bring the record in.** Copy `portfolio.json`, `brag/entries/`, `case-studies/` and `decisions/` from `documents/portfolio/` (a copy; nothing there is touched), after Dan's read-through (§14, question 1). Add `status`, `backs` and `in_flight[]` (ADR 0006) with the lineup's current state. Add `links.site` once known (slice 7). Add the record check (§10) as a script with tests, run in CI. No site yet.
+2. **Site skeleton with static HTML.** Astro, Tailwind, the layout (header, footer, head tags), `robots.txt`, `sitemap.xml`, a placeholder home that already reads the record, and the post-build check in CI. Delete the template's files, keeping what's worth keeping (ADR 0003).
+3. **Home, /work/ and the deep dives.** Cards from `artifacts[]` and `in_flight[]`; `/work/<slug>/` from each project's case study (the two live projects get case studies written in this slice, from the kit template, from their repos' READMEs, ADRs and PR descriptions); short pages for in-flight projects; `/experience/<story>/` for the employer stories. axe in CI.
+4. **/resume/ generated from `portfolio.json`.** Experience with its highlighted brag entries, projects from `artifacts[]` only, education, contact without phone; a print stylesheet. Unit tests for the projection.
+5. **/recruiters/, /about/, /contact/ and /how-i-build/.** Each checked against the guardrails before the PR (§10).
+6. **The Shipped log from `brag/entries/`.** /shipped/ and the home strip. It'll be thin until the first Friday Setup run with this repo as `--portfolio` (§14, question 6).
+7. **Deploy, then a kit portfolio-scorer run.** Cloudflare Pages account, project and scoped token (Dan's steps, one at a time); preview and production deploys from Actions; `links.site` set in the record; the external link check; then `portfolio_audit.py --url <site> --portfolio portfolio.json`, the VWC checklist pass, and the top fixes (in this PR, or the next if they're big).
+8. **GitHub profile.** The `djwirz/djwirz` repo and its README generated from the record; the profile website and bio; pins; a website URL and topics on each of the five project repos. **Each of these is its own approval from Dan.**
+9. **Old public repos: a review list.** A table in `docs/github-review.md` (§9). Changes happen only as Dan decides each row, each one approved.
+
+## 14. Open questions
+1. **Read-through before the record goes public.** As of 2026-11-23 every read-log box for `documents/portfolio/` (portfolio.json, the five brag files and all nine case studies) is still open. Recommendation: slice 1 waits until Dan has checked the files it copies, or Dan says to go ahead with named boxes open.
+2. **Which copy is the source of truth afterwards?** Once slice 1 merges, there are two copies. Recommendation: this repo becomes the source, and `documents/portfolio/` is retired or kept as a frozen copy, in a documents session, Dan's call. Until then, a change to either needs copying to the other. The read-log tool tracks `documents/portfolio/` paths, so it would need pointing here (a documents session too).
+3. **Token Keeper's live URL.** Its README describes the demo receiver's status page but doesn't give a public URL, and the repo has no website set. Which URL should the card's "Live" link use, and does the demo stay up (and within its AWS budget) for visitors?
+4. **Respiratory view's "Backs".** Which employer story does it link to: `walgreens-fhir-integration`, `platform-consultant`, or a new case study about the provider portal and Epic work? Or leave "Backs" off until the project is planned.
+5. **Availability on /recruiters/.** The record doesn't say (open to full-time, contract, start date, remote only or hybrid). What should the key facts say?
+6. **The Shipped log's source.** The current brag files are per-role pools of employer work, not dated public wins. Recommendation: /shipped/ lists only entries whose `Proof:` is a public link (which Friday Setup entries for the project repos will have), and the employer pools feed /resume/ and /about/ instead. That makes the log empty until the first Friday Setup run against this repo.
+7. **Domain.** Start on `pages.dev` (ADR 0004). Buy a custom domain now, later, or never?
+8. **Friday Setup and this repo's PRs.** This repo's merged PRs will show up in the brag inbox. Keep them (site work is real work) or exclude the repo?
+9. **The kit's depth-filter finding.** The résumé rebuilder, LinkedIn scorer and screen grader count artifacts at any depth (ADR 0006). Worth raising in a kit session?

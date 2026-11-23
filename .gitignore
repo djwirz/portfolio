@@ -1,0 +1,48 @@
+# --- From the kit's templates/portfolio-repo/gitignore ---
+# Raw, uncurated job-search data never goes to GitHub
+brag/inbox/
+.friday-setup-state.json
+*resume*
+*Resume*
+funnel*.csv
+score.json
+score.md
+
+# Scores and reports quote your resume
+*-score.json
+*-score.md
+composite.json
+composite.md
+plan.md
+sync.md
+screen*.json
+screen*.md
+quals*.json
+grades*.json
+linkedin*.txt
+linkedin*.pdf
+Profile.pdf
+
+# --- Site exceptions ---
+# The kit's *resume* rule is for resume files. The site's /resume/ page source (spec §5)
+# is not one, so files and folders under src/ and tests/ are let back in. Built output
+# (dist/) stays ignored below, and resume files never belong in this repo anyway.
+!src/**/*resume*
+!tests/**/*resume*
+
+# --- Site build ---
+node_modules/
+dist/
+.astro/
+.wrangler/
+coverage/
+*.log
+*.tsbuildinfo
+
+# --- Local and secrets ---
+.DS_Store
+.env
+.env.*
+!.env.example
+.idea/
+.vscode/
