@@ -18,7 +18,7 @@ State read on 2026-11-23 with `gh` (read-only): no bio, no website, location "Mi
 | 8 | `fhir-over-mcp`: website, topics | the site's /work/fhir-over-mcp/ · python, mcp, fhir, evals, llm | yes | yes |
 | 9 | `coverage-check`: website, topics | the site's /work/coverage-check/ · python, fastapi, postgresql, fhir, kubernetes, docker | yes | yes |
 | 10 | `holdfast-ex`: website, topics | the site's /work/holdfast-ex/ · elixir, otp, event-sourcing, postgresql, stripe | yes | yes |
-| 11 | `portfolio`: website | https://djwirz.withered-smoke-b9b4.workers.dev | | |
+| 11 | `portfolio`: website | https://djwirz.withered-smoke-b9b4.workers.dev | yes | yes |
 | 12 | Pins | Already done by Dan: all five projects plus `portfolio` are pinned (read 2026-11-23). They show as coverage-check, fhir-over-mcp, holdfast, holdfast-ex, token-keeper, portfolio; matching the site's order (holdfast, token-keeper, fhir-over-mcp, coverage-check, holdfast-ex) means dragging them in the GitHub UI, if Dan wants that | yes | yes |
 
 Topics come from each project's `skills[]` in `portfolio.json`, lowercased and hyphenated. A topic says what a repo uses; it doesn't claim the skill is proven (ADR 0006).
@@ -59,3 +59,12 @@ Every public repo that isn't one of the five projects or this one: 28, three mor
 | algo-time-complexity-review | yes | | 2015-10 | Make private | Fork | |
 
 Archiving makes a repo read-only and can be undone in its settings. Making one private can be undone too, but it drops the repo's stars and watchers, and they don't come back when it's made public again (verify).
+
+## Checks (2026-11-23, after rows 1–11)
+
+- `sync_check.py --portfolio portfolio.json --github djwirz`: 4 of 4 checks agree (the bio names the target role, the website links the site, both live projects are pinned). Acceptance §12 item 7 passes.
+- `github_score.py --user djwirz --repos holdfast,token-keeper,fhir-over-mcp,coverage-check,holdfast-ex,portfolio --onet 15-1252.00`: 82 out of 100. The profile checks and every topic and website check this slice touched pass. What it still finds, none of it part of this slice:
+  - **No license** on any of the six repos.
+  - **Short READMEs, no tests or CI** on the in-flight repos (Coverage Check, holdfast-ex, and the FHIR over MCP README). Expected at depth 0–1; they grow as each project is built.
+  - **No topics on `portfolio`.** Not planned in this slice.
+  - **Lane skills the pins don't show** (Angular, Kafka, Azure, C#, C++): O*NET's broad lane, not Dan's target. Not chased (problem first).
