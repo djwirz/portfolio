@@ -17,6 +17,7 @@ export const routes: string[] = [
   "/contact/",
   "/how-i-build/",
   "/reading/",
+  "/refer/",
   ...projects.map((p) => `/work/${projectSlug(p.name)}/`),
   ...stories.map((s) => `/experience/${s}/`),
 ];

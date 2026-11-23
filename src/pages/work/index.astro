@@ -12,6 +12,6 @@ import { displayName, projects } from "../../lib/record";
     Live projects first, then the ones being built or planned. Each card says which employer story it backs.
   </p>
   <div class="mt-8 grid gap-4 sm:grid-cols-2">
-    {projects.map((project) => <ProjectCard project={project} />)}
+    {projects.map((project) => <ProjectCard project={project} level={2} />)}
   </div>
 </Base>

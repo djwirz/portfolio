@@ -1,0 +1,38 @@
+---
+// The referral kit (go-live item 8, a VWC checklist gap): what someone needs to
+// pass Dan along in one paste. Everything comes from the record.
+import Base from "../../layouts/Base.astro";
+import { record, displayName } from "../../lib/record";
+
+const { profile, links } = record;
+const site = links.site ?? "";
+// "Senior software engineer who makes…" → "a senior software engineer who makes…"
+const headline = profile.headline.charAt(0).toLowerCase() + profile.headline.slice(1);
+const intro = [
+  `I'd like to introduce ${displayName}, a ${headline}.`,
+  `${profile.availability ? `Availability: ${profile.availability} ` : ""}Portfolio: ${site}`,
+];
+const three = [
+  { label: "Portfolio", href: site || "/" },
+  { label: "Résumé", href: site ? `${site}/resume/` : "/resume/" },
+  { label: "LinkedIn", href: links.linkedin },
+].filter((l) => l.href);
+---
+<Base title={`Refer ${displayName}`} description={`A two-line intro and three links for passing ${displayName} along to a hiring manager or recruiter.`}>
+  <h1 class="text-3xl font-semibold tracking-tight">Refer me</h1>
+  <p class="mt-4 max-w-prose">Thanks for passing me along. Here's a two-line intro you can paste as it is, and the three links that matter.</p>
+
+  <h2 class="mt-10 text-xl font-semibold">The intro</h2>
+  <blockquote class="mt-4 max-w-prose rounded-lg border border-border bg-muted px-4 py-3">
+    {intro.map((line) => <p class="mt-1 first:mt-0">{line}</p>)}
+  </blockquote>
+
+  <h2 class="mt-10 text-xl font-semibold">Three links</h2>
+  <ul class="mt-4 space-y-2">
+    {three.map((l) => (
+      <li><span class="font-medium">{l.label}:</span> <a href={l.href} class="break-all underline underline-offset-2">{l.href}</a></li>
+    ))}
+  </ul>
+
+  <p class="mt-10 text-sm text-muted-foreground">Recruiters can also use the <a href="/recruiters/" class="underline underline-offset-2">recruiter fast lane</a> for role, availability and contact on one page.</p>
+</Base>
