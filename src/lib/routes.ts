@@ -11,6 +11,11 @@ const stories = Object.keys(storyFiles)
 export const routes: string[] = [
   "/",
   "/work/",
+  "/resume/",
+  "/recruiters/",
+  "/about/",
+  "/contact/",
+  "/how-i-build/",
   ...projects.map((p) => `/work/${projectSlug(p.name)}/`),
   ...stories.map((s) => `/experience/${s}/`),
 ];

@@ -1,0 +1,15 @@
+---
+import Base from "../../layouts/Base.astro";
+import { record, displayName } from "../../lib/record";
+
+const { profile, links } = record;
+---
+<Base title={`Contact ${displayName}`} description={`How to reach ${displayName}, ${profile.target_role}: email or LinkedIn.`}>
+  <h1 class="text-3xl font-semibold tracking-tight">Contact</h1>
+  <p class="mt-6 max-w-2xl text-lg">
+    The quickest way to reach me is email
+    {profile.email && <>: <a href={`mailto:${profile.email}`} class="underline underline-offset-2">{profile.email}</a></>}.
+    I'm also on <a href={links.linkedin} class="underline underline-offset-2">LinkedIn</a>, and my code is on <a href={links.github} class="underline underline-offset-2">GitHub</a>.
+  </p>
+  {profile.availability && <p class="mt-4 text-muted-foreground">{profile.availability}</p>}
+</Base>

@@ -1,0 +1,48 @@
+---
+import Base from "../../layouts/Base.astro";
+import { record, displayName, liveSkills, projectSlug, projects, STATUS_LABEL, statusOf } from "../../lib/record";
+
+const { profile, links } = record;
+const holdfast = projects.find((p) => p.name === "Holdfast");
+const tokenKeeper = projects.find((p) => p.name === "Token Keeper");
+const fhir = projects.find((p) => p.name === "FHIR over MCP");
+const proofs = [holdfast, tokenKeeper, fhir].filter((p) => p !== undefined).map((p) => ({
+  name: p.name,
+  line: p.one_liner,
+  status: STATUS_LABEL[statusOf(p)],
+  href: p.url || `/work/${projectSlug(p.name)}/`,
+  label: p.url ? "Live demo" : "Deep dive",
+  repo: p.repo,
+}));
+---
+<Base title={`Recruiters: ${displayName}, ${profile.target_role}`} description={`Key facts for recruiters: ${profile.target_role}, ${profile.location}, ${profile.availability ?? "remote"}.`}>
+  <h1 class="text-3xl font-semibold tracking-tight">Recruiter fast lane</h1>
+  <dl class="mt-8 grid gap-x-8 gap-y-4 sm:grid-cols-[10rem_1fr]">
+    <dt class="font-medium">Role</dt><dd>{profile.target_role}</dd>
+    <dt class="font-medium">Location</dt><dd>{profile.location} · remote</dd>
+    {profile.availability && <><dt class="font-medium">Availability</dt><dd>{profile.availability}</dd></>}
+    <dt class="font-medium">Core skills</dt><dd>{liveSkills.join(", ")}</dd>
+    <dt class="font-medium">Contact</dt>
+    <dd>
+      {profile.email && <><a href={`mailto:${profile.email}`} class="underline underline-offset-2">{profile.email}</a> · </>}
+      <a href={links.linkedin} class="underline underline-offset-2">LinkedIn</a>
+    </dd>
+  </dl>
+
+  <h2 class="mt-12 text-xl font-semibold">Three things to look at</h2>
+  <ol class="mt-4 space-y-4">
+    {proofs.map((p) => (
+      <li>
+        <a href={p.href} class="font-medium underline underline-offset-2">{p.name}</a>
+        <span class="text-sm text-muted-foreground"> · {p.status} · {p.label}</span>
+        <p>{p.line}.</p>
+        {p.repo && <a href={p.repo} class="text-sm underline underline-offset-2">Code</a>}
+      </li>
+    ))}
+  </ol>
+
+  <p class="mt-12 flex flex-wrap gap-4">
+    <a href="/resume/" class="rounded-lg bg-primary px-4 py-2 text-primary-foreground">Résumé</a>
+    <a href="/work/" class="rounded-lg border border-border px-4 py-2">All the work</a>
+  </p>
+</Base>

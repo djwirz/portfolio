@@ -157,3 +157,22 @@ export const backedBy = (story: string) => projects.filter((p) => p.backs.some((
 
 /** A case study's title: its first "# " line. */
 export const caseStudyTitle = (body: string | undefined) => /^#\s+(.+)$/m.exec(body ?? "")?.[1].trim() ?? "";
+
+/** Skills the live projects prove (ADR 0006: planned work never counts). */
+export const liveSkills: string[] = [...new Set(record.artifacts.flatMap((a) => a.skills))];
+
+/** Which employer each story is about, for /about/ and /experience/. Reviewed by hand. */
+export const STORY_ORG: { [story: string]: string } = {
+  "billing-reconciliation-workspace": "Kyros",
+  "insurance-eligibility-automation": "Kyros",
+  "monolith-modernization": "Kyros",
+  "hyp-zero-to-launch": "HYP",
+  "real-time-bidding-stripe-holds": "HYP",
+  "instagram-handle-verification": "HYP",
+  "platform-consultant": "Propeller Health",
+  "walgreens-fhir-integration": "Propeller Health",
+  "express-scripts-mail-enrollment": "Propeller Health",
+};
+
+/** Employer stories about one org, in the order above. */
+export const storiesFor = (org: string) => Object.keys(STORY_ORG).filter((s) => STORY_ORG[s] === org);

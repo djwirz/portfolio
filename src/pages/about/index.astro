@@ -1,0 +1,60 @@
+---
+import Base from "../../layouts/Base.astro";
+import { record, displayName, storiesFor, caseStudyTitle } from "../../lib/record";
+import { getCollection } from "astro:content";
+
+const { profile, education } = record as typeof record & {
+  education?: { publications?: { title: string; url?: string; type?: string }[]; research?: { group?: string; duration?: string }; institution?: string };
+};
+const studies = await getCollection("caseStudies");
+const titleOf = (id: string) => caseStudyTitle(studies.find((s) => s.id === id)?.body);
+const year = (d: string) => (/^present$/i.test(d) ? "now" : d.slice(0, 4));
+
+// One row per organization, newest first, with its titles in order (Propeller had three).
+const orgs: { org: string; titles: string[]; from: string; to: string; location: string }[] = [];
+for (const e of [...record.experience].sort((a, b) => b.start.localeCompare(a.start))) {
+  const row = orgs.find((o) => o.org === e.org);
+  if (row) {
+    row.titles.unshift(e.title);
+    row.from = e.start;
+  } else {
+    orgs.push({ org: e.org, titles: [e.title], from: e.start, to: e.end, location: typeof e.location === "string" ? e.location : "" });
+  }
+}
+const poster = education?.publications?.[0];
+---
+<Base title={`About ${displayName}`} description={`About ${displayName}, ${profile.target_role}: ${profile.headline}.`}>
+  <h1 class="text-3xl font-semibold tracking-tight">About</h1>
+  <div class="prose mt-6">
+    <p>{profile.summary}</p>
+  </div>
+
+  <h2 class="mt-12 text-xl font-semibold">Where I've worked</h2>
+  <ul class="mt-4 space-y-5">
+    {orgs.map((o) => (
+      <li>
+        <p><span class="font-medium">{o.org}</span> · {[...new Set(o.titles)].join(", then ")}</p>
+        <p class="text-sm text-muted-foreground">{year(o.from)}–{year(o.to)}{o.location && ` · ${o.location}`}</p>
+        {storiesFor(o.org).length > 0 && (
+          <ul class="mt-1 list-disc pl-5 text-sm">
+            {storiesFor(o.org).map((s) => <li><a href={`/experience/${s}/`} class="underline underline-offset-2">{titleOf(s)}</a></li>)}
+          </ul>
+        )}
+      </li>
+    ))}
+  </ul>
+
+  <h2 class="mt-12 text-xl font-semibold">Before software</h2>
+  <div class="prose mt-4">
+    <p>
+      I studied chemistry and biology at {education?.institution ?? "the University of Wisconsin–Madison"} and spent {education?.research?.duration ?? "about three years"} doing research in the {education?.research?.group ?? "Biophysics Instrumentation Facility"}.
+      {poster && <> That work led to a conference poster I co-authored: {poster.url ? <a href={poster.url}>{poster.title}</a> : poster.title}.</>}
+      Then Hack Reactor in 2016, and teaching as a volunteer instructor at Reboot Kamp in Amman, Jordan.
+    </p>
+  </div>
+
+  <h2 class="mt-12 text-xl font-semibold">Outside of software</h2>
+  <div class="prose mt-4">
+    <p>I spend my time working out, playing pinball, disc golfing and fly fishing, and I'm often at my cabin on the Mississippi River.</p>
+  </div>
+</Base>
