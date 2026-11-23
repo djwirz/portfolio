@@ -3,7 +3,7 @@
 Dan's public portfolio repo: the career record (`portfolio.json`, `brag/`, `case-studies/`, `decisions/`) and the static site built from it, in one repo (ADR 0002). One record, many views: the site, the GitHub profile README, the résumé and LinkedIn are all built from the record. Use they/them for Dan.
 
 ## Status
-Slice 3 of 5 (spec §13): every page in the header exists: home, /work/ and the project pages, /experience/ stories, /resume/ (from the record, prints to PDF), /recruiters/, /about/, /contact/ and /how-i-build/. Next: slice 4 (deploy to Cloudflare Pages, the OG image, then a kit scorer run). Decisions and the go-live check are spec §14.
+Slice 4 of 5 (spec §13): live at https://djwirz.withered-smoke-b9b4.workers.dev (Cloudflare Workers static assets, ADR 0008), not shared until the go-live check (spec §14). The first kit scorer run: 100 automated, 68 with the VWC checklist pass; the gaps are go-live item 8. Next: slice 5 (GitHub profile, pins, repo settings, old-repo list).
 
 ## Commands
 - Node 22.23+ (`.nvmrc` for CI), pnpm from `packageManager`.

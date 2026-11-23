@@ -14,6 +14,7 @@ const nav = [
   { href: "/work/", label: "Work" },
   { href: "/resume/", label: "Résumé" },
   { href: "/recruiters/", label: "Recruiters" },
+  { href: "/how-i-build/", label: "How I build" },
   { href: "/about/", label: "About" },
   { href: "/contact/", label: "Contact" },
 ];
@@ -35,6 +36,7 @@ const nav = [
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content={`${displayName}, ${record.profile.target_role}`} />
     <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap.xml" />
     <slot name="head" />
   </head>
@@ -55,7 +57,6 @@ const nav = [
         <li><a href={links.github} class="hover:underline">GitHub</a></li>
         <li><a href={links.linkedin} class="hover:underline">LinkedIn</a></li>
         <li><a href="/contact/" class="hover:underline">Contact</a></li>
-        <li><a href="/how-i-build/" class="hover:underline">How I build</a></li>
         <li><a href="/reading/" class="hover:underline">Reading</a></li>
       </ul>
     </footer>

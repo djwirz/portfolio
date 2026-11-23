@@ -214,6 +214,14 @@ A walkthrough with Dan before the site's URL goes anywhere: a résumé, LinkedIn
 5. **Kit run:** the portfolio scorer (automated and checklist passes) run on the live site, with its fixes done or deferred with a reason.
 6. **GitHub:** the profile website, pins and repo website URLs point at the live site (slice 5 steps, each one approved).
 7. **Personal content:** Dan reviews the personal parts of /about/ (the hobbies line) and /reading/ (its entries, or whether to show it while it's empty).
+8. **The VWC checklist gaps** found by the first judgment pass on the live site (2026-11-23, 68 out of 100 with the checklist; 100 on the automated checks alone). Each is done, or deferred with a reason:
+   - **"No coming soon cards" and "No coming soon placeholders"** (Quality Bar): the four in-flight cards and the empty /reading/ page. Keep them, or show only live and building projects at go-live.
+   - **Cards:** lead with an outcome, add one sentence of business impact and one quotable fact with a number per live project (in `documents/`).
+   - **Token Keeper's demo:** a live URL or a demo GIF.
+   - **Deep dives:** link or show each repo's architecture diagram and data model.
+   - **Accessibility:** a Lighthouse run by hand on home, /work/ and /resume/.
+   - **A referral kit** (/refer/): a two-line intro to paste, and three links.
+   - Accepted for now, with reasons in the PR: role pages and per-track résumés, writing and talks, testimonials, a custom domain, LinkedIn, the LLM-specific items (they come with FHIR over MCP), video walkthroughs.
 
 ### Still open
 - **Which Propeller story leads** on Respiratory view's card, if only one fits on it. Defaulting to `platform-consultant`.
