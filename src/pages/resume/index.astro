@@ -1,0 +1,62 @@
+---
+import Base from "../../layouts/Base.astro";
+import { record, displayName } from "../../lib/record";
+import { jobs, projects, skills } from "../../lib/resume";
+
+const { profile, links } = record;
+// Only a real site URL (set at deploy), never the build placeholder.
+const site = links.site ?? "";
+const bare = (u: string) => u.replace(/^https?:\/\//, "").replace(/\/$/, "");
+---
+<Base title={`Résumé: ${displayName}, ${profile.target_role}`} description={`${displayName}'s résumé: ${profile.headline}.`}>
+  <div class="resume max-w-3xl">
+    <p class="text-sm text-muted-foreground print:hidden">Prints to PDF from your browser (File → Print).</p>
+    <h1 class="mt-2 text-3xl font-semibold tracking-tight">{displayName}</h1>
+    <p class="mt-1 text-lg">{profile.target_role}</p>
+    <p class="mt-2 text-sm">
+      {profile.location} (remote)
+      {profile.email && <> · <a href={`mailto:${profile.email}`}>{profile.email}</a></>}
+      {site && <> · <a href={site}>{bare(site)}</a></>}
+      {" · "}<a href={links.linkedin}>{bare(links.linkedin)}</a>
+      {" · "}<a href={links.github}>{bare(links.github)}</a>
+    </p>
+    <p class="mt-4">{profile.headline}.</p>
+
+    <h2>Experience</h2>
+    {jobs.map((job) => (
+      <section class="job">
+        <h3>{job.title}, {job.org}</h3>
+        <p class="meta">{[job.location, job.dates].filter(Boolean).join(" · ")}</p>
+        {job.bullets.length > 0 && (
+          <ul>{job.bullets.map((b) => <li>{b.what}{b.impact && `: ${b.impact.replace(/\.$/, "")}`}.</li>)}</ul>
+        )}
+      </section>
+    ))}
+
+    {projects.length > 0 && (
+      <>
+        <h2>Projects</h2>
+        {projects.map((p) => (
+          <section class="job">
+            <h3>{p.name}</h3>
+            <p class="meta">
+              {p.url && <><a href={p.url}>Live demo</a> · </>}
+              <a href={p.repo}>{bare(p.repo)}</a>
+            </p>
+            <ul><li>{p.one_liner}. Built with {p.skills.slice(0, 6).join(", ")}.</li></ul>
+          </section>
+        ))}
+      </>
+    )}
+
+    <h2>Skills</h2>
+    <p>{skills.join(", ")}</p>
+
+    {record.education_line && (
+      <>
+        <h2>Education</h2>
+        <p>{record.education_line}</p>
+      </>
+    )}
+  </div>
+</Base>

@@ -1,0 +1,46 @@
+---
+import Base from "../../layouts/Base.astro";
+import { displayName } from "../../lib/record";
+
+const gh = "https://github.com/djwirz";
+---
+<Base title={`How I build: ${displayName}'s method, with Claude Code`} description="Spec and decision records first, thin local-first slices, a live proof for every deploy step, and Claude Code writing while I review: including where the AI was wrong.">
+  <h1 class="text-3xl font-semibold tracking-tight">How I build</h1>
+  <div class="prose mt-6">
+    <p>
+      Every project here is built the same way. Claude Code writes most of the code and docs; I direct it, make the decisions, do anything that needs my identity (accounts, keys, approvals, deploys), and review every pull request before it merges. The method is what keeps that honest.
+    </p>
+
+    <h2>1. The spec and the decisions come first</h2>
+    <p>
+      Pull request #1 in every repo has no code. It holds a spec (the problem, non-goals, the appetite, the architecture, failure modes, acceptance criteria and a slice plan) and the first architecture decision records, one per choice that would be expensive to reverse. In Holdfast and Token Keeper, a fresh-context review of the first draft found real holes before any code was written.
+      Examples: <a href={`${gh}/holdfast/pull/1`}>Holdfast's PR #1</a> and <a href={`${gh}/token-keeper/pull/1`}>Token Keeper's PR #1</a>.
+    </p>
+
+    <h2>2. Thin slices, local first</h2>
+    <p>
+      After the spec, each pull request is one thin end-to-end slice, planned before any code and approved by me. The first slices run only on a laptop, against fakes or local services, so the logic is proven before anything is deployed. Every new tool or dependency has to earn its place through the problem: an invariant, a failure mode or an acceptance criterion, never "to show a skill".
+    </p>
+
+    <h2>3. A live proof for each deploy step</h2>
+    <p>
+      Tests and CI run on every pull request, but some things only a real deploy can show. So each deploy step ends with a live proof: alarms fired on purpose and recovered by following their runbooks, a production request traced end to end, a load test through more than one server instance. Results are checked against the real system, not against what the plan said would happen.
+    </p>
+
+    <h2>4. Where the AI was wrong is part of the record</h2>
+    <p>
+      Every pull request has a "How AI was used" section listing what it got wrong and how it was caught. The mistakes cluster in two places. First, stale or confident assumptions about outside systems: a payment provider's retry behaviour, a cloud identity token's format, a hosting platform's config file. Second, tests that pass without exercising anything. The defences that work are deliberate: checking current docs before relying on them, a non-triviality check on any test that could pass vacuously, breaking the code on purpose to watch a test fail, and a by-hand run against the real service where fakes can't see.
+      The full lists are in <a href={`${gh}/holdfast/blob/main/docs/case-study.md`}>Holdfast's case study</a> and <a href={`${gh}/token-keeper/blob/main/docs/case-study.md`}>Token Keeper's notes</a>.
+    </p>
+
+    <h2>5. Cut what doesn't earn its place</h2>
+    <p>
+      The AI tends to over-build: circuit breakers for outages the project doesn't need to survive, scripts for checks a framework already does. Part of reviewing is cutting. This site's own plan went from nine slices to five when I asked whether it was over-engineered (<a href={`${gh}/portfolio/pull/2`}>PR #2</a>).
+    </p>
+
+    <h2>What it adds up to</h2>
+    <p>
+      Projects planned at weeks have taken days, because review, not typing, sets the pace. What doesn't compress is the part that needs judgment: creating accounts and keys, waiting on outside services, checking eval cases by hand, and reading each pull request properly.
+    </p>
+  </div>
+</Base>

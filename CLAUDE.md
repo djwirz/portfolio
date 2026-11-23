@@ -3,13 +3,14 @@
 Dan's public portfolio repo: the career record (`portfolio.json`, `brag/`, `case-studies/`, `decisions/`) and the static site built from it, in one repo (ADR 0002). One record, many views: the site, the GitHub profile README, the résumé and LinkedIn are all built from the record. Use they/them for Dan.
 
 ## Status
-Slice 2 of 5 (spec §13): home with project cards, /work/, a deep dive or short page for each project, and an /experience/ page for each employer story. Next: slice 3 (/resume/, /recruiters/, /about/, /contact/, /how-i-build/). Decisions and the go-live check are spec §14.
+Slice 3 of 5 (spec §13): every page in the header exists: home, /work/ and the project pages, /experience/ stories, /resume/ (from the record, prints to PDF), /recruiters/, /about/, /contact/ and /how-i-build/. Next: slice 4 (deploy to Cloudflare Pages, the OG image, then a kit scorer run). Decisions and the go-live check are spec §14.
 
 ## Commands
 - Node 22.23+ (`.nvmrc` for CI), pnpm from `packageManager`.
 - `pnpm dev`, `pnpm build` (`astro check && astro build`; the build also runs the record checks in `src/lib/record.ts`), `pnpm preview`.
 - `pnpm record:copy`: mirrors the record from `~/projects/documents/portfolio/` (or `RECORD_SRC`). The only way record files change here.
 - New static pages go in `src/lib/routes.ts` so they're in `sitemap.xml` (the kit's scorer fetches that exact path); pages built from the record are derived there already.
+- The preview server for the browser pane is `.claude/launch.json` (`portfolio-preview`).
 - Case studies render through the `caseStudies` collection (`src/content.config.ts`). Each one's own `# ` title is its page's H1, so the page doesn't add another.
 
 ## How we work
