@@ -37,7 +37,9 @@ Option 3, plus the two fields on both arrays:
 - **`name`** is the display name ("Token Keeper", "FHIR over MCP"). The site derives each slug from it, and the scorer's and brag-curator's name matching (lower case, hyphens as spaces) still works.
 - **Moving a card** from `in_flight[]` to `artifacts[]` happens in the PR that sets its depth to 2 and its status to `live`, with its live `url` and its case study.
 
-The build validates this (spec §10): an `artifacts[]` entry must have `status: "live"`, depth 2 or more, a `url` and a `case_study`; an `in_flight[]` entry must have depth 0 or 1 and a status other than `live`; every `backs[].story` must name a file in `case-studies/`.
+Like the rest of the record, these fields are edited in `documents/portfolio/portfolio.json` and mirrored here (ADR 0002).
+
+The build validates this (spec §10): an `artifacts[]` entry must have `status: "live"` and depth 2 or more, and should have a `url` and a `case_study` (a warning while the site is being built, an error in the go-live check, spec §14); an `in_flight[]` entry must have depth 0 or 1 and a status other than `live`; every `backs[].story` must name a file in `case-studies/`.
 
 Why: it keeps the record honest on every surface the kit builds from it, with no change to the kit, and the cost is one extra key.
 

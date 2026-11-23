@@ -22,7 +22,7 @@ Provisional until kit step 1 produces `resume-score.json`. Few skills on its own
 
 ## Scope
 - **Must have:**
-  - The record in the repo: `portfolio.json`, `brag/entries/`, `case-studies/`, `decisions/` (slice 1), with `brag/inbox/` git-ignored.
+  - The record mirrored into the repo from `documents/portfolio/`: `portfolio.json`, `brag/entries/`, `case-studies/`, `decisions/` (slice 1), with `brag/inbox/` git-ignored.
   - Every page pre-rendered to static HTML (ADR 0003).
   - Home, /work/ with a card for each project, /work/<slug>/ deep dives, /experience/<slug>/ employer stories, /resume/ generated from the record, /recruiters/, /about/, /contact/, /how-i-build/, and a Shipped log from `brag/entries/`.
   - Cards with status and "Backs" (ADR 0006).
@@ -53,7 +53,7 @@ Provisional until kit step 1 produces `resume-score.json`. Few skills on its own
 - **Time:** about two to three days of sessions (roadmap phase 6), including the project case studies.
 - **Budget:** free tiers only.
 - **Data:** only what's in the public-safe record. Employer names and facts only as the record states them. No employer code. Never anything from `documents/archive/`. No phone number.
-- **Approvals:** the record goes public only after Dan's read-through (spec §14). Every outward GitHub change (creating a repo, changing settings or visibility, pinning) is approved by Dan one at a time.
+- **Approvals:** the site isn't shared until the go-live check passes, including Dan's read-through of the mirrored record (spec §14). Every outward GitHub change (creating a repo, changing settings or visibility, pinning) is approved by Dan one at a time.
 - **Hosting:** a static host that serves at the root of its domain (ADR 0004).
 
 ## Quality plan

@@ -26,7 +26,7 @@ Why: it's the free option that serves at the root (so the scorer's checks can pa
 ## Consequences
 - **Outward steps for Dan, one at a time, in the deploy slice:** creating the Cloudflare account and the Pages project, creating the scoped API token, and adding it and the account id as GitHub secrets. Claude prepares each step; Dan does or approves it.
 - **No paid account, so no budget alarm.** If a payment method is ever added (for example to buy a domain through Cloudflare), CLAUDE.md's budget-alarm rule applies first.
-- **`links.site` in `portfolio.json`** gets the production URL once it exists, so the resume, LinkedIn and GitHub can point at it, and `sync_check.py` can check they do.
+- **`links.site` in `portfolio.json`** (edited in `documents/`, then mirrored; ADR 0002) gets the production URL once it exists, so the resume, LinkedIn and GitHub can point at it, and `sync_check.py` can check they do.
 - **Fork PRs get no preview** (the secret isn't available to them). Fine for a personal repo.
 - **Revisit** if Cloudflare's free tier changes, or once a custom domain is bought (GitHub Pages becomes viable again at that point, but previews would still be missing).
 - Exact Wrangler command names, the free-tier limits and the "no payment method" detail are from memory: verify in the deploy slice.

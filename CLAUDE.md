@@ -16,7 +16,8 @@ PR #1: the spec, the artifact spec and ADRs 0001–0006. Nothing built yet. The 
 - **Every outward-facing GitHub change is its own approval from Dan:** creating a repo, changing a repo's settings or visibility, pinning, setting the profile. Prepare the exact change and wait for a yes on each one. The same goes for creating accounts or tokens on the host.
 
 ## The record
-- The record's content comes from `~/projects/documents/portfolio/` (copied in slice 1). **Never edit, move or delete anything under `~/projects/documents` or `~/projects/ai-era-job-kit`.** Read the kit's templates and scripts; never change them.
+- **The record here is a mirror** of `~/projects/documents/portfolio/`, the one place it's edited (ADR 0002). Never edit the mirrored files by hand: a record change is made in `documents/` (by Dan or a documents session), then synced here with the sync script in a PR. **Never edit, move or delete anything under `~/projects/documents` or `~/projects/ai-era-job-kit`.** Read the kit's templates and scripts; never change them.
+- **The site isn't shared yet.** Build the structure; missing URLs and an unfinished read-through are warnings, not blockers. Everything that must be true before sharing is in the go-live check (spec §14).
 - **`~/projects/documents/archive/` is private.** Read it (especially the guardrails and the never-claim list) before writing or rewording anything about employer work, and never copy, quote or summarize it here, in PR descriptions included.
 - `brag/inbox/` is git-ignored and never committed. Only curated entries (`status: curated`) feed the site.
 - No phone number anywhere in the repo or on the site. The email comes only from `profile.email` (ADR 0005).

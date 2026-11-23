@@ -41,7 +41,9 @@ docs/                   this spec, the artifact spec, ADRs
 ```
 
 ### Where it comes from
-Slice 1 copies `~/projects/documents/portfolio/` in: `portfolio.json`, `brag/entries/`, `case-studies/` and `decisions/`. It's a copy. Nothing under `~/projects/documents` is edited, moved or deleted, and whether that copy is retired is Dan's call (§14, question 2). `brag/inbox/` isn't copied into git; it's ignored by `.gitignore` whatever lands there. **`documents/archive/` is never copied, quoted or summarized here.** It's read only to keep the site honest (§10).
+`~/projects/documents/portfolio/` is the one place the record is edited (ADR 0002). Slice 1 adds a one-way sync script that mirrors `portfolio.json`, `brag/entries/`, `case-studies/` and `decisions/` into this repo. The mirror is never edited by hand; a record change is made in `documents/`, then synced here in a PR. The script only reads `documents/`, and never edits, moves or deletes anything there. `brag/inbox/` isn't mirrored, and `.gitignore` ignores it whatever lands there. **`documents/archive/` is never copied, quoted or summarized here.** It's read only to keep the site honest (§10).
+
+Fields the site needs that the record doesn't have yet (`status`, `backs`, `in_flight[]`, `profile.availability`) are added in `documents/` too, by Dan or a documents session. Slice 1 writes out the exact additions for that.
 
 ### Additions to the kit's format (ADR 0006)
 - **`status`** and **`backs`** on every project entry.
@@ -72,7 +74,7 @@ Skill names on cards use the same names as the résumé (the kit's lexicon), so 
 | **/work/&lt;slug&gt;/** | The project's deep dive: its case study (kit `templates/case-study.md`: outcome-first title; live, code and skills line; context, role and constraints, key decisions with ADR links, what went wrong including where AI was wrong, result; evidence). In-flight projects get a short page: the one-liner, the status, what it backs, the repo and its spec | `case-studies/<slug>.md`, the entry |
 | **/experience/&lt;slug&gt;/** | An employer story (the nine case studies in the record), with a "Proved in public by" line linking back to the projects that back it | `case-studies/<story>.md`, reverse of `backs` |
 | **/resume/** | HTML résumé, generated from the record, that prints to PDF. Email, no phone. Projects from `artifacts[]` only | `profile`, `experience` with `highlights` → `brag/entries`, `artifacts`, `education` |
-| **/recruiters/** | Key facts (role, location, remote, availability, core skills), three proof links (Holdfast live, Token Keeper, FHIR over MCP's eval results once they exist), email and LinkedIn | `profile`, `artifacts`, `links` |
+| **/recruiters/** | Key facts (role, location, remote, availability from `profile.availability`: full time, open to contract, can start any time, ideally remote, core skills), three proof links (Holdfast live, Token Keeper, FHIR over MCP's eval results once they exist), email and LinkedIn | `profile`, `artifacts`, `links` |
 | **/about/** | Bio: Propeller, HYP, Kyros, the family business, teaching at Reboot Kamp, the UW research and poster | `profile`, `experience`, `education` |
 | **/contact/** | Email (`mailto:`) and LinkedIn (ADR 0005) | `profile.email`, `links` |
 | **/how-i-build/** | The method: spec and ADRs as PR #1, thin local-first slices, a live proof for each deploy step, Claude Code writing and Dan reviewing, and where AI was wrong (with links to real PR descriptions) | written once |
@@ -132,7 +134,9 @@ The judgment pass (the VWC Portfolio Checklist, read live when the scorer runs) 
 | **FHIR over MCP** | Building (slice 1 when this was planned) | `in_flight` | 1 | Propeller: Walgreens FHIR → `walgreens-fhir-integration` |
 | **Coverage Check** | Planned (PR #1 open when this was planned) | `in_flight` | 0 | Kyros: eligibility checks → `insurance-eligibility-automation` |
 | **holdfast-ex** | Planned (PR #1 open when this was planned) | `in_flight` | 0 | HYP, told a second way → `real-time-bidding-stripe-holds` |
-| **Respiratory view** | Next (not planned yet) | `in_flight` | 0 | Propeller: inhaler data, the provider portal and Epic → story to be chosen (§14) |
+| **Respiratory view** | Next (not planned yet) | `in_flight` | 0 | Propeller: the provider portal and Epic → `platform-consultant`; inhaler data → `walgreens-fhir-integration` |
+
+As Dan put it: most of the FHIR work is Propeller's, and the billing and eligibility projects are Kyros's.
 
 Statuses move fast: by the time this PR was written, FHIR over MCP had merged slice 2 and Coverage Check's and holdfast-ex's PR #1 had merged. Slice 1 records each project's status from its repo at that time, not from this table.
 
@@ -160,6 +164,7 @@ Statuses move fast: by the time this PR was written, FHIR over MCP had merged sl
 - No `phone` key anywhere in the record.
 - Every `experience[].highlights` ref (`brag/entries/<file>#<slug>`) resolves to a `### heading`, and every `backs[].story` to a file in `case-studies/`.
 - No tracked file under `brag/inbox/`, and no brag file with `status: raw` outside it.
+- Missing URLs and case studies are warnings while building, and errors with `--go-live` (§14).
 
 ## 11. Testing, CI and deploy
 - **From PR #1:** gitleaks on every PR and push to `main` (`.github/workflows/ci.yml`), default rules (`.gitleaks.toml`).
@@ -179,23 +184,38 @@ Statuses move fast: by the time this PR was written, FHIR over MCP had merged sl
 8. The profile README is live, the five repos are pinned with website URLs and topics, and the old-repo review list has Dan's decision on each row.
 
 ## 13. Slice plan (one PR each, after this spec)
-1. **Bring the record in.** Copy `portfolio.json`, `brag/entries/`, `case-studies/` and `decisions/` from `documents/portfolio/` (a copy; nothing there is touched), after Dan's read-through (§14, question 1). Add `status`, `backs` and `in_flight[]` (ADR 0006) with the lineup's current state. Add `links.site` once known (slice 7). Add the record check (§10) as a script with tests, run in CI. No site yet.
+1. **Bring the record in.** A one-way sync script mirrors `portfolio.json`, `brag/entries/`, `case-studies/` and `decisions/` from `documents/portfolio/` (read only; nothing there is touched). Write out the exact `documents/` additions for `status`, `backs`, `in_flight[]` and `profile.availability` (ADR 0006, §14) for Dan or a documents session to apply, then sync. Add the record check (§10) as a script with tests, run in CI. No site yet. Not gated on the read-through (§14, decision 1).
 2. **Site skeleton with static HTML.** Astro, Tailwind, the layout (header, footer, head tags), `robots.txt`, `sitemap.xml`, a placeholder home that already reads the record, and the post-build check in CI. Delete the template's files, keeping what's worth keeping (ADR 0003).
 3. **Home, /work/ and the deep dives.** Cards from `artifacts[]` and `in_flight[]`; `/work/<slug>/` from each project's case study (the two live projects get case studies written in this slice, from the kit template, from their repos' READMEs, ADRs and PR descriptions); short pages for in-flight projects; `/experience/<story>/` for the employer stories. axe in CI.
 4. **/resume/ generated from `portfolio.json`.** Experience with its highlighted brag entries, projects from `artifacts[]` only, education, contact without phone; a print stylesheet. Unit tests for the projection.
 5. **/recruiters/, /about/, /contact/ and /how-i-build/.** Each checked against the guardrails before the PR (§10).
 6. **The Shipped log from `brag/entries/`.** /shipped/ and the home strip. It'll be thin until the first Friday Setup run with this repo as `--portfolio` (§14, question 6).
-7. **Deploy, then a kit portfolio-scorer run.** Cloudflare Pages account, project and scoped token (Dan's steps, one at a time); preview and production deploys from Actions; `links.site` set in the record; the external link check; then `portfolio_audit.py --url <site> --portfolio portfolio.json`, the VWC checklist pass, and the top fixes (in this PR, or the next if they're big).
+7. **Deploy, then a kit portfolio-scorer run.** Cloudflare Pages account, project and scoped token (Dan's steps, one at a time); preview and production deploys from Actions; `links.site` set in the record (in `documents/`, then synced); the external link check; then `portfolio_audit.py --url <site> --portfolio portfolio.json`, the VWC checklist pass, and the top fixes (in this PR, or the next if they're big).
 8. **GitHub profile.** The `djwirz/djwirz` repo and its README generated from the record; the profile website and bio; pins; a website URL and topics on each of the five project repos. **Each of these is its own approval from Dan.**
 9. **Old public repos: a review list.** A table in `docs/github-review.md` (§9). Changes happen only as Dan decides each row, each one approved.
 
-## 14. Open questions
-1. **Read-through before the record goes public.** As of 2026-11-23 every read-log box for `documents/portfolio/` (portfolio.json, the five brag files and all nine case studies) is still open. Recommendation: slice 1 waits until Dan has checked the files it copies, or Dan says to go ahead with named boxes open.
-2. **Which copy is the source of truth afterwards?** Once slice 1 merges, there are two copies. Recommendation: this repo becomes the source, and `documents/portfolio/` is retired or kept as a frozen copy, in a documents session, Dan's call. Until then, a change to either needs copying to the other. The read-log tool tracks `documents/portfolio/` paths, so it would need pointing here (a documents session too).
-3. **Token Keeper's live URL.** Its README describes the demo receiver's status page but doesn't give a public URL, and the repo has no website set. Which URL should the card's "Live" link use, and does the demo stay up (and within its AWS budget) for visitors?
-4. **Respiratory view's "Backs".** Which employer story does it link to: `walgreens-fhir-integration`, `platform-consultant`, or a new case study about the provider portal and Epic work? Or leave "Backs" off until the project is planned.
-5. **Availability on /recruiters/.** The record doesn't say (open to full-time, contract, start date, remote only or hybrid). What should the key facts say?
-6. **The Shipped log's source.** The current brag files are per-role pools of employer work, not dated public wins. Recommendation: /shipped/ lists only entries whose `Proof:` is a public link (which Friday Setup entries for the project repos will have), and the employer pools feed /resume/ and /about/ instead. That makes the log empty until the first Friday Setup run against this repo.
-7. **Domain.** Start on `pages.dev` (ADR 0004). Buy a custom domain now, later, or never?
-8. **Friday Setup and this repo's PRs.** This repo's merged PRs will show up in the brag inbox. Keep them (site work is real work) or exclude the repo?
-9. **The kit's depth-filter finding.** The résumé rebuilder, LinkedIn scorer and screen grader count artifacts at any depth (ADR 0006). Worth raising in a kit session?
+## 14. Decisions, the go-live check, and what's still open
+### Dan's answers (2026-11-23)
+The site is being built to get the structure in place; **it isn't being shared with anyone yet.** So nothing below blocks building. What has to be true before it's shared goes in the go-live check.
+
+1. **The read-through** of the mirrored record isn't a gate on any slice. It's a blocking item in the go-live check.
+2. **One source of truth:** `documents/portfolio/` stays the one place the record is edited, and this repo mirrors it with a one-way sync script (ADR 0002). No second copy to keep up by hand.
+3. **URLs:** a missing URL (Token Keeper's live demo, for one) doesn't block a slice. The card shows only the links that exist, and the record check lists every missing URL as a warning. Filling them is a go-live item.
+4. **Respiratory view backs Propeller** (`platform-consultant` for the provider portal and Epic, `walgreens-fhir-integration` for the inhaler data). Most of the FHIR work is Propeller's; the billing and eligibility projects are Kyros's.
+5. **Availability**, for /recruiters/ and `profile.availability`: full time, open to contract, can start any time, ideally remote but willing to discuss.
+6. **The Shipped log** gets built as structure now, from whatever curated entries have a public proof link. It can be thin or empty until Dan's go-live walkthrough.
+7. **Domain:** free tiers only. The site stays on its `pages.dev` address.
+8. **Friday Setup and this repo:** Dan isn't using Friday Setup for a few weeks. When they start, keep this repo in (site work is real work), and have brag-curator drop PRs that only sync the record. Revisit if they crowd the inbox.
+9. **The kit's depth-filter finding** (ADR 0006): noted, not raised yet. Dan is staying practical and getting the pieces in place before committing to the full kit system. ADR 0006 works around it either way.
+
+### The go-live check (blocking before the site is shared)
+A walkthrough with Dan before the site's URL goes anywhere: a résumé, LinkedIn, the GitHub profile, an application. The record check gets a `--go-live` mode that turns these warnings into errors, so the list can't be skipped silently.
+1. **Read-through:** every mirrored record file has its read-log box checked (in `documents/archive/read-log.md`), or Dan names the exceptions.
+2. **URLs:** every project card's live, code and deep-dive links filled in, starting with Token Keeper's live demo, and `links.site` set.
+3. **Guardrails:** every page about employer work checked against the private guardrails.
+4. **Statuses:** each project's status and depth match its repo on the day.
+5. **Kit run:** the portfolio scorer (automated and checklist passes) run on the live site, with its fixes done or deferred with a reason.
+6. **GitHub:** the profile website, pins and repo website URLs point at the live site (slice 8 steps, each one approved).
+
+### Still open
+- **Which Propeller story leads** on Respiratory view's card, if only one fits on it. Defaulting to `platform-consultant`.
