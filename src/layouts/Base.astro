@@ -1,0 +1,55 @@
+---
+import "../styles/global.css";
+import { record, displayName } from "../lib/record";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const { links } = record;
+const nav = [
+  { href: "/work/", label: "Work" },
+  { href: "/resume/", label: "Résumé" },
+  { href: "/recruiters/", label: "Recruiters" },
+  { href: "/about/", label: "About" },
+  { href: "/contact/", label: "Contact" },
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <link rel="sitemap" href="/sitemap.xml" />
+  </head>
+  <body class="min-h-screen antialiased">
+    <header class="border-b border-border">
+      <nav class="mx-auto flex max-w-4xl flex-wrap items-center justify-between gap-4 px-4 py-4" aria-label="Main">
+        <a href="/" class="font-semibold">{displayName}</a>
+        <ul class="flex flex-wrap gap-4 text-sm">
+          {nav.map((item) => <li><a href={item.href} class="hover:underline">{item.label}</a></li>)}
+        </ul>
+      </nav>
+    </header>
+    <main class="mx-auto max-w-4xl px-4 py-12">
+      <slot />
+    </main>
+    <footer class="border-t border-border">
+      <ul class="mx-auto flex max-w-4xl flex-wrap gap-4 px-4 py-6 text-sm text-muted-foreground">
+        <li><a href={links.github} class="hover:underline">GitHub</a></li>
+        <li><a href={links.linkedin} class="hover:underline">LinkedIn</a></li>
+        <li><a href="/contact/" class="hover:underline">Contact</a></li>
+      </ul>
+    </footer>
+  </body>
+</html>

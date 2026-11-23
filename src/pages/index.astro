@@ -1,0 +1,20 @@
+---
+import Base from "../layouts/Base.astro";
+import { record, displayName } from "../lib/record";
+
+const { profile } = record;
+// A placeholder home: the cards and the rest arrive in slice 2 (spec §13).
+---
+<Base
+  title={`${displayName}, ${profile.target_role}`}
+  description={profile.headline}
+>
+  <p class="text-sm text-muted-foreground">{displayName}</p>
+  <h1 class="mt-2 text-4xl font-semibold tracking-tight">{profile.target_role}</h1>
+  <p class="mt-2 text-muted-foreground">{profile.location} · remote</p>
+  <p class="mt-6 max-w-2xl text-lg">{profile.summary}</p>
+  <p class="mt-8 flex flex-wrap gap-4">
+    <a href="/work/" class="rounded-lg bg-primary px-4 py-2 text-primary-foreground">See the work</a>
+    <a href="/recruiters/" class="rounded-lg border border-border px-4 py-2">Recruiter fast lane</a>
+  </p>
+</Base>

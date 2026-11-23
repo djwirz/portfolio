@@ -3,7 +3,13 @@
 Dan's public portfolio repo: the career record (`portfolio.json`, `brag/`, `case-studies/`, `decisions/`) and the static site built from it, in one repo (ADR 0002). One record, many views: the site, the GitHub profile README, the résumé and LinkedIn are all built from the record. Use they/them for Dan.
 
 ## Status
-Spec, artifact spec and ADRs 0001–0007 are merged or in review; nothing built yet. The slice plan (five slices) is `docs/spec.md` §13; decisions and the go-live check are §14. The Bun + React template files in the working tree are untracked on purpose and get replaced in slice 1 (ADR 0003).
+Slice 1 of 5 (spec §13): the record is mirrored in, and an Astro skeleton (one placeholder page) builds and checks it. The record additions in `docs/record-additions.md` are waiting to be applied in `documents/`. Decisions and the go-live check are spec §14.
+
+## Commands
+- Node 22.23+ (`.nvmrc` for CI), pnpm from `packageManager`.
+- `pnpm dev`, `pnpm build` (`astro check && astro build`; the build also runs the record checks in `src/lib/record.ts`), `pnpm preview`.
+- `pnpm record:copy`: mirrors the record from `~/projects/documents/portfolio/` (or `RECORD_SRC`). The only way record files change here.
+- New pages go in `src/lib/routes.ts` so they're in `sitemap.xml` (the kit's scorer fetches that exact path).
 
 ## How we work
 - Pull requests only; never push to `main`. Merged PRs are the project's record, and Friday Setup pulls them.
