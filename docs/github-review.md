@@ -8,7 +8,7 @@ State read on 2026-11-23 with `gh` (read-only): no bio, no website, location "Mi
 
 | # | Change | Exact value | Dan's yes | Done |
 |---|---|---|---|---|
-| 1 | Profile bio | Senior Software Engineer: healthcare integrations, payments and legacy modernization. | | |
+| 1 | Profile bio | Senior Software Engineer: healthcare integrations, payments and legacy modernization. | yes | yes |
 | 2 | Profile website | https://djwirz.withered-smoke-b9b4.workers.dev | | |
 | 3 | Profile location | Eau Claire, WI (Dan, 2026-11-23: currently in Eau Claire; GitHub still says Minneapolis, MN) | | |
 | 4 | Create public repo `djwirz/djwirz` | Description "Profile README", a one-line README to start | | |
