@@ -3,7 +3,7 @@
 Dan's public portfolio repo: the career record (`portfolio.json`, `brag/`, `case-studies/`, `decisions/`) and the static site built from it, in one repo (ADR 0002). One record, many views: the site, the GitHub profile README, the résumé and LinkedIn are all built from the record. Use they/them for Dan.
 
 ## Status
-PR #1: the spec, the artifact spec and ADRs 0001–0006. Nothing built yet. The slice plan is `docs/spec.md` §13; open questions are §14. The Bun + React template files in the working tree are untracked on purpose and get replaced in slice 2 (ADR 0003).
+Spec, artifact spec and ADRs 0001–0007 are merged or in review; nothing built yet. The slice plan (five slices) is `docs/spec.md` §13; decisions and the go-live check are §14. The Bun + React template files in the working tree are untracked on purpose and get replaced in slice 1 (ADR 0003).
 
 ## How we work
 - Pull requests only; never push to `main`. Merged PRs are the project's record, and Friday Setup pulls them.
@@ -16,13 +16,15 @@ PR #1: the spec, the artifact spec and ADRs 0001–0006. Nothing built yet. The 
 - **Every outward-facing GitHub change is its own approval from Dan:** creating a repo, changing a repo's settings or visibility, pinning, setting the profile. Prepare the exact change and wait for a yes on each one. The same goes for creating accounts or tokens on the host.
 
 ## The record
-- **The record here is a mirror** of `~/projects/documents/portfolio/`, the one place it's edited (ADR 0002). Never edit the mirrored files by hand: a record change is made in `documents/` (by Dan or a documents session), then synced here with the sync script in a PR. **Never edit, move or delete anything under `~/projects/documents` or `~/projects/ai-era-job-kit`.** Read the kit's templates and scripts; never change them.
-- **The site isn't shared yet.** Build the structure; missing URLs and an unfinished read-through are warnings, not blockers. Everything that must be true before sharing is in the go-live check (spec §14).
+- **The record here is a mirror** of `~/projects/documents/portfolio/`, the one place it's edited (ADR 0002). Never edit the mirrored files by hand: a record change is made in `documents/` (by Dan or a documents session), then copied here with the README's copy command in a PR (ADR 0007). **Never edit, move or delete anything under `~/projects/documents` or `~/projects/ai-era-job-kit`.** Read the kit's templates and scripts; never change them.
+- **The site isn't shared yet.** Build the structure; missing URLs and an unfinished read-through don't block a slice. Everything that must be true before sharing is in the go-live check (spec §14).
 - **`~/projects/documents/archive/` is private.** Read it (especially the guardrails and the never-claim list) before writing or rewording anything about employer work, and never copy, quote or summarize it here, in PR descriptions included.
 - `brag/inbox/` is git-ignored and never committed. Only curated entries (`status: curated`) feed the site.
 - No phone number anywhere in the repo or on the site. The email comes only from `profile.email` (ADR 0005).
 - Projects that aren't deployed go in `in_flight[]`, never in `artifacts[]` (ADR 0006). A project moves to `artifacts[]` in the PR that makes it depth 2, live, with a case study.
 - Every `highlights` ref in `portfolio.json` must match a `### heading` in `brag/entries` (file#slug), and every `backs[].story` a file in `case-studies/`.
+
+- **Keep the tooling small** (ADR 0007): lean on Astro's schemas, the kit's scorer and Cloudflare's Git integration before writing a script or a CI job.
 
 ## Constraints
 - Never employer code, data or names beyond what's public and in the record. Synthetic or public data only.

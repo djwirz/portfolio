@@ -21,11 +21,11 @@ This repo is that place: **one record, many views.** `portfolio.json`, `case-stu
 - **Résumé files** (PDF, DOCX). /resume/ is an HTML page that prints to PDF; tailored résumés are made with the kit, outside any git repo.
 
 ## 3. Appetite
-- **Time:** about two to three days of sessions (roadmap phase 6), including each project's case study. With the spec-first, thin-slice method the build so far has gone faster than planned, but the parts that don't compress here are Dan's read-through of the record, writing the deep dives honestly, and each outward GitHub step.
+- **Time:** about a day or so of sessions after ADR 0007's trims (the roadmap's phase 6 said two to three days), including each project's case study. With the spec-first, thin-slice method the build so far has gone faster than planned, but the parts that don't compress here are Dan's read-through of the record, writing the deep dives honestly, and each outward GitHub step.
 - **Money:** nothing. Free hosting tier, no domain at first.
-- **Shape:** nine thin PRs after this one (§13), each reviewable on its own preview URL from slice 2 on.
-- **If time runs short, cut in this order:** the /decisions/ index; the Shipped log's grouping and styling (a plain list stays); /how-i-build/ beyond one page of prose; the custom-domain step; the old-repo review (it's a list for Dan; doing it can wait).
-  **Never cut:** static HTML for every page, the record validation and privacy checks, the "Backs" link on every card, /recruiters/, /resume/, the contact path, and Dan's approval on every outward GitHub change.
+- **Shape:** five PRs after the spec (§13), each reviewable on its own preview URL once deploys are connected. Tooling is kept small (ADR 0007): what already exists does the checking.
+- **If time runs short, cut in this order:** the /decisions/ index; /how-i-build/ beyond one page of prose; the custom-domain step; the old-repo review (it's a list for Dan; doing it can wait).
+  **Never cut:** static HTML for every page, the schema and privacy checks in the build, the "Backs" link on every card, /recruiters/, /resume/, the contact path, and Dan's approval on every outward GitHub change.
 
 ## 4. The record
 ### Layout (from the kit's `templates/portfolio-repo/README.md`)
@@ -41,7 +41,7 @@ docs/                   this spec, the artifact spec, ADRs
 ```
 
 ### Where it comes from
-`~/projects/documents/portfolio/` is the one place the record is edited (ADR 0002). Slice 1 adds a one-way sync script that mirrors `portfolio.json`, `brag/entries/`, `case-studies/` and `decisions/` into this repo. The mirror is never edited by hand; a record change is made in `documents/`, then synced here in a PR. The script only reads `documents/`, and never edits, moves or deletes anything there. `brag/inbox/` isn't mirrored, and `.gitignore` ignores it whatever lands there. **`documents/archive/` is never copied, quoted or summarized here.** It's read only to keep the site honest (§10).
+`~/projects/documents/portfolio/` is the one place the record is edited (ADR 0002). This repo holds a mirror of `portfolio.json`, `brag/entries/`, `case-studies/` and `decisions/`, refreshed by one copy command in the README that Claude runs in a PR (ADR 0007). The mirror is never edited by hand; a record change is made in `documents/`, then copied here. The command only reads `documents/`, and never edits, moves or deletes anything there. `brag/inbox/` isn't mirrored, and `.gitignore` ignores it whatever lands there. **`documents/archive/` is never copied, quoted or summarized here.** It's read only to keep the site honest (§10).
 
 Fields the site needs that the record doesn't have yet (`status`, `backs`, `in_flight[]`, `profile.availability`) are added in `documents/` too, by Dan or a documents session. Slice 1 writes out the exact additions for that.
 
@@ -69,7 +69,7 @@ Skill names on cards use the same names as the résumé (the kit's lexicon), so 
 ## 5. Site map
 | Page | What's on it | Comes from |
 |---|---|---|
-| **Home** `/` | One H1 with the role ("Senior Software Engineer"), "Eau Claire, WI · remote", a two-line summary, buttons for "See the work" (/work/) and "Recruiter fast lane" (/recruiters/), the project cards in lineup order, the five newest Shipped log items | `profile`, `artifacts`, `in_flight`, `brag/entries` |
+| **Home** `/` | One H1 with the role ("Senior Software Engineer"), "Eau Claire, WI · remote", a two-line summary, buttons for "See the work" (/work/) and "Recruiter fast lane" (/recruiters/), the project cards in lineup order | `profile`, `artifacts`, `in_flight` |
 | **/work/** | Every project as a card, live ones first, then Building, Planned, Next | `artifacts`, `in_flight` |
 | **/work/&lt;slug&gt;/** | The project's deep dive: its case study (kit `templates/case-study.md`: outcome-first title; live, code and skills line; context, role and constraints, key decisions with ADR links, what went wrong including where AI was wrong, result; evidence). In-flight projects get a short page: the one-liner, the status, what it backs, the repo and its spec | `case-studies/<slug>.md`, the entry |
 | **/experience/&lt;slug&gt;/** | An employer story (the nine case studies in the record), with a "Proved in public by" line linking back to the projects that back it | `case-studies/<story>.md`, reverse of `backs` |
@@ -78,8 +78,7 @@ Skill names on cards use the same names as the résumé (the kit's lexicon), so 
 | **/about/** | Bio: Propeller, HYP, Kyros, the family business, teaching at Reboot Kamp, the UW research and poster | `profile`, `experience`, `education` |
 | **/contact/** | Email (`mailto:`) and LinkedIn (ADR 0005) | `profile.email`, `links` |
 | **/how-i-build/** | The method: spec and ADRs as PR #1, thin local-first slices, a live proof for each deploy step, Claude Code writing and Dan reviewing, and where AI was wrong (with links to real PR descriptions) | written once |
-| **/shipped/** | The Shipped log: curated accomplishments with a public proof link, newest first | `brag/entries` |
-| *Later:* /decisions/, /writing/ | An index of every ADR across the project repos; case-study posts (phase 8) | each repo's `docs/adr/` |
+| *Later:* /shipped/, /decisions/, /writing/ | A Shipped log of curated wins with a public proof link, once Friday Setup is in use (ADR 0007); an index of every ADR across the project repos; case-study posts (phase 8) | `brag/entries`, each repo's `docs/adr/` |
 
 Every page has the same header (Work, Résumé, Recruiters, About, Contact) and a footer linking to GitHub, LinkedIn and /contact/, so every page has a contact path and a résumé link.
 
@@ -95,7 +94,7 @@ Every page has the same header (Work, Résumé, Recruiters, About, Contact) and 
 
 ## 6. Build
 - **Astro, static output, TypeScript, Tailwind** (ADR 0003). No client JavaScript by default.
-- **Content collections** load `portfolio.json` and `case-studies/*.md` through zod schemas; `brag/entries/*.md` through a small parser of the kit's brag format (`## Org`, `### Accomplishment`, `- Impact:`, `- Skills:`, `- Portfolio artifact:`, `- Proof:`). Entries with `status: raw` are never read.
+- **Content collections** load `portfolio.json` and `case-studies/*.md` through zod schemas; `brag/entries/*.md` through a small parser of the kit's brag format (`## Org`, `### Accomplishment`, `- Impact:`, `- Skills:`, `- Portfolio artifact:`, `- Proof:`), for /resume/. Entries with `status: raw` are never read. The schemas are the record check (§10).
 - **Slugs** come from the record: a project's from its `name`, a story's from its file name.
 - **Head tags on every page:** `<html lang="en">`, a title of at least a few words, a description of a sentence or two, the viewport meta, an Open Graph title, description and image, and on home a JSON-LD `Person` built from `profile` and `links`.
 - **Generated files:** `sitemap.xml` (Astro's sitemap integration) and `robots.txt` allowing everything and pointing at the sitemap.
@@ -108,23 +107,23 @@ From `scripts/portfolio_audit.py` (read 2026-11-23). It fetches the home page, t
 |---|---|
 | Site loads over HTTPS; HTML in under two seconds | Static files on Cloudflare Pages (ADR 0004) |
 | Page title; viewport meta; `lang` | Head tags on every page (§6) |
-| Content readable without JavaScript (about forty words or more in the raw HTML) | Pre-rendered pages (ADR 0003); a post-build check enforces it |
-| One clear H1 | Home has exactly one H1; the post-build check enforces one per page |
+| Content readable without JavaScript (about forty words or more in the raw HTML) | Pre-rendered pages (ADR 0003) |
+| One clear H1 | One H1 per page, in the shared layout |
 | States the role in the text | "Senior Software Engineer" in the home H1 |
 | Links to GitHub, LinkedIn | Header or footer on every page |
 | Has project or case-study pages | Home links to `/work/<slug>/`, which match the scorer's pattern |
 | Mentions live demos or deployed apps | Cards for live projects say "Live demo" |
 | Mentions decisions, tradeoffs or results; tests, CI or evals | Deep dives have "Key decisions" and "Result" and name the tests and CI |
-| All images have alt text | Post-build check |
+| All images have alt text | Images only through a component that requires `alt` |
 | Résumé link; contact path | `/resume/` in the header; `/contact/` in the footer |
 | Meta description (fifty characters or more); Open Graph image | Head tags (§6); one shared OG image |
 | JSON-LD Person | On home (§6) |
 | Not blocked from search; `robots.txt`; `sitemap.xml` at the host root | Generated (§6); served at the root (ADR 0004) |
-| Each deployed artifact is on the site and its live link loads | Every `artifacts[]` entry has a card on home, and its `url` is checked by CI's link check |
+| Each deployed artifact is on the site and its live link loads | Every `artifacts[]` entry has a card on home, and the scorer itself loads each `url` |
 | **Links to writing, talks or press** | **Fails until /writing/ exists** (phase 8). Accepted |
 | **Testimonials or endorsements** | **Fails** (a non-goal). Accepted |
 
-The judgment pass (the VWC Portfolio Checklist, read live when the scorer runs) happens in slice 7.
+The judgment pass (the VWC Portfolio Checklist, read live when the scorer runs) happens in the deploy slice (slice 4) and again at go-live.
 
 ## 8. The lineup (as of 2026-11-23)
 | Project | Status | Where in the record | Depth | Backs (employer story → case study) |
@@ -140,14 +139,14 @@ As Dan put it: most of the FHIR work is Propeller's, and the billing and eligibi
 
 Statuses move fast: by the time this PR was written, FHIR over MCP had merged slice 2 and Coverage Check's and holdfast-ex's PR #1 had merged. Slice 1 records each project's status from its repo at that time, not from this table.
 
-## 9. GitHub (slice 8 and slice 9)
+## 9. GitHub (slice 5)
 **Every outward change is a separate step Dan approves**: creating a repo, changing a repo's settings, changing visibility, pinning. Claude prepares the exact change (the file, the command, the setting) and waits for a yes on each.
 
-- **Profile README:** a new public repo, `djwirz/djwirz`, with a README from the kit's `templates/github-profile-readme.md`: one line on who Dan is; **What I've shipped** (Holdfast, Token Keeper, each with its live link and code); **Building now** (FHIR over MCP, Coverage Check, holdfast-ex); **How I work** in one line, linking to /how-i-build/; **Find me:** Portfolio · LinkedIn. Generated from `portfolio.json` by a small script in this repo, so it stays a view of the record. That repo is worked through PRs too.
+- **Profile README:** a new public repo, `djwirz/djwirz`, with a README from the kit's `templates/github-profile-readme.md`: one line on who Dan is; **What I've shipped** (Holdfast, Token Keeper, each with its live link and code); **Building now** (FHIR over MCP, Coverage Check, holdfast-ex); **How I work** in one line, linking to /how-i-build/; **Find me:** Portfolio · LinkedIn. Written by hand from the record, and updated by Claude when a project ships (ADR 0007). That repo is worked through PRs too.
 - **Profile settings:** the website field set to the site's URL (so `sync_check.py` passes "portfolio site on GitHub"); the bio checked against `profile.headline` and `target_role`.
 - **Pins:** the five project repos, in the site's order: Holdfast, Token Keeper, FHIR over MCP, Coverage Check, holdfast-ex.
 - **The five project repos:** a website URL on each (the live demo where there is one, otherwise its deep dive on the site) and topics named the way the market names the skills. Each repo is its own approval.
-- **Old public repos** (slice 9): a review list, one row per repo, with a suggested action (archive, make private, keep) and why. Dan decides each one, and each change is its own approval. The list covers every public repo that isn't one of the five projects: the twelve the shaping doc named (padre-ginos, bh-irv6, workout-app, workout-app-api, workout-app-api-enco, encore-workout-api, notion-api, notion-workout-api, notion-railway-api, rogers-photo-gallery, faura-take-home, cover-letter-ai) and about a dozen more that `gh repo list` also shows as public (cover-letter-generation, docker_postgres_with_data, code-challenge-100-plus, smart-on-fhir-tutorial, techScreen, sniptuck, DataStructures-Algorithms, hyper, Legit2.0, LoremIpsumElectron, greenfield-1, AWS_Tutorial, react-tutorial). Forks are flagged as forks.
+- **Old public repos:** a review list, one row per repo, with a suggested action (archive, make private, keep) and why. Dan decides each one, and each change is its own approval. The list covers every public repo that isn't one of the five projects: the twelve the shaping doc named (padre-ginos, bh-irv6, workout-app, workout-app-api, workout-app-api-enco, encore-workout-api, notion-api, notion-workout-api, notion-railway-api, rogers-photo-gallery, faura-take-home, cover-letter-ai) and about a dozen more that `gh repo list` also shows as public (cover-letter-generation, docker_postgres_with_data, code-challenge-100-plus, smart-on-fhir-tutorial, techScreen, sniptuck, DataStructures-Algorithms, hyper, Legit2.0, LoremIpsumElectron, greenfield-1, AWS_Tutorial, react-tutorial). Forks are flagged as forks.
 
 ## 10. Privacy and honesty
 **Rules:**
@@ -159,19 +158,18 @@ Statuses move fast: by the time this PR was written, FHIR over MCP had merged sl
 - In-flight projects never claim their skills as proven (ADR 0006).
 - Every page that retells employer work (deep dives, /about/, /experience/) is checked against the guardrails before its PR is opened, and the PR says it was.
 
-**What the build enforces** (slice 1 adds the checks, slice 2 runs them in CI):
+**What the build enforces** (in Astro's content config, ADR 0007; CI runs the build on every PR):
 - `portfolio.json` matches its schema, including the ADR 0006 rules for `artifacts[]` and `in_flight[]`.
 - No `phone` key anywhere in the record.
 - Every `experience[].highlights` ref (`brag/entries/<file>#<slug>`) resolves to a `### heading`, and every `backs[].story` to a file in `case-studies/`.
 - No tracked file under `brag/inbox/`, and no brag file with `status: raw` outside it.
-- Missing URLs and case studies are warnings while building, and errors with `--go-live` (§14).
+- Missing URLs and case studies don't fail the build. The card just leaves the link out, and the go-live checklist catches them (§14).
 
 ## 11. Testing, CI and deploy
-- **From PR #1:** gitleaks on every PR and push to `main` (`.github/workflows/ci.yml`), default rules (`.gitleaks.toml`).
-- **From slice 1:** the record check (§10) as a script with unit tests, run in CI.
-- **From slice 2:** typecheck, build, and a post-build check over `dist/` (each page: text in the HTML, one H1, title, description, `lang`, alt text on every image; every internal link resolves). The resume projection and the Shipped log parser get unit tests.
-- **From slice 7:** preview deploy on every PR and production deploy on merge to `main` (ADR 0004); after deploy, a link check of every external link on the site (live demos, repos), and the kit's `portfolio_audit.py` run against the live URL with its report attached to the PR.
-- **Accessibility:** axe on home, /work/ and /resume/ in CI from slice 3.
+- **CI** (`.github/workflows/ci.yml`): gitleaks on every PR and push to `main` (from PR #1), and `astro build` on every PR from slice 1, so a bad record or a privacy hit fails before merge.
+- **Deploy:** Cloudflare Pages' Git integration builds on push to `main` and gives each PR a preview (ADR 0007). No deploy workflow and no secrets.
+- **Page checks:** the kit's `portfolio_audit.py` against the live site, in the deploy slice and at go-live. Lighthouse once by hand on home, /work/ and /resume/.
+- **Unit tests:** only if a piece of logic earns them. The résumé projection is the likeliest candidate.
 
 ## 12. Acceptance criteria (v1 "done", depth 3)
 1. The record is in the repo, validated on every build; `brag/inbox/` has never been committed.
@@ -184,38 +182,34 @@ Statuses move fast: by the time this PR was written, FHIR over MCP had merged sl
 8. The profile README is live, the five repos are pinned with website URLs and topics, and the old-repo review list has Dan's decision on each row.
 
 ## 13. Slice plan (one PR each, after this spec)
-1. **Bring the record in.** A one-way sync script mirrors `portfolio.json`, `brag/entries/`, `case-studies/` and `decisions/` from `documents/portfolio/` (read only; nothing there is touched). Write out the exact `documents/` additions for `status`, `backs`, `in_flight[]` and `profile.availability` (ADR 0006, §14) for Dan or a documents session to apply, then sync. Add the record check (§10) as a script with tests, run in CI. No site yet. Not gated on the read-through (§14, decision 1).
-2. **Site skeleton with static HTML.** Astro, Tailwind, the layout (header, footer, head tags), `robots.txt`, `sitemap.xml`, a placeholder home that already reads the record, and the post-build check in CI. Delete the template's files, keeping what's worth keeping (ADR 0003).
-3. **Home, /work/ and the deep dives.** Cards from `artifacts[]` and `in_flight[]`; `/work/<slug>/` from each project's case study (the two live projects get case studies written in this slice, from the kit template, from their repos' READMEs, ADRs and PR descriptions); short pages for in-flight projects; `/experience/<story>/` for the employer stories. axe in CI.
-4. **/resume/ generated from `portfolio.json`.** Experience with its highlighted brag entries, projects from `artifacts[]` only, education, contact without phone; a print stylesheet. Unit tests for the projection.
-5. **/recruiters/, /about/, /contact/ and /how-i-build/.** Each checked against the guardrails before the PR (§10).
-6. **The Shipped log from `brag/entries/`.** /shipped/ and the home strip. It'll be thin until the first Friday Setup run with this repo as `--portfolio` (§14, question 6).
-7. **Deploy, then a kit portfolio-scorer run.** Cloudflare Pages account, project and scoped token (Dan's steps, one at a time); preview and production deploys from Actions; `links.site` set in the record (in `documents/`, then synced); the external link check; then `portfolio_audit.py --url <site> --portfolio portfolio.json`, the VWC checklist pass, and the top fixes (in this PR, or the next if they're big).
-8. **GitHub profile.** The `djwirz/djwirz` repo and its README generated from the record; the profile website and bio; pins; a website URL and topics on each of the five project repos. **Each of these is its own approval from Dan.**
-9. **Old public repos: a review list.** A table in `docs/github-review.md` (§9). Changes happen only as Dan decides each row, each one approved.
+1. **The record and the site skeleton.** Write out the exact `documents/` additions (`status`, `backs`, `in_flight[]`, `profile.availability`; ADR 0006) for Dan or a documents session to apply, then copy the record in with the README's command. Astro with Tailwind; the shared layout (header, footer, head tags); `robots.txt` and `sitemap.xml`; the content schemas with the privacy checks (§10); `astro build` in CI. Delete the template's files, keeping what's worth keeping (ADR 0003). Not gated on the read-through (§14).
+2. **Home, /work/ and the deep dives.** Cards from `artifacts[]` and `in_flight[]`. `/work/<slug>/` from each project's case study; the two live projects get case studies written here, from the kit template and their repos' READMEs, ADRs and PR descriptions. Short pages for in-flight projects, and `/experience/<story>/` for the employer stories.
+3. **The rest of the pages:** /resume/ generated from the record (with a print stylesheet), /recruiters/, /about/, /contact/ and /how-i-build/. Each page about employer work is checked against the guardrails before the PR (§10).
+4. **Deploy, then a kit scorer run.** Connect Cloudflare Pages to the repo (Dan's steps, one at a time). Set `links.site` in `documents/`, then copy it in. Run `portfolio_audit.py --url <site> --portfolio portfolio.json` and the VWC checklist pass, then make the top fixes.
+5. **GitHub.** The `djwirz/djwirz` profile README, the profile website and bio, the pins, a website URL and topics on each of the five project repos, and the old-repo review list in `docs/github-review.md` (§9). **Each outward change is its own approval from Dan.**
 
 ## 14. Decisions, the go-live check, and what's still open
 ### Dan's answers (2026-11-23)
 The site is being built to get the structure in place; **it isn't being shared with anyone yet.** So nothing below blocks building. What has to be true before it's shared goes in the go-live check.
 
 1. **The read-through** of the mirrored record isn't a gate on any slice. It's a blocking item in the go-live check.
-2. **One source of truth:** `documents/portfolio/` stays the one place the record is edited, and this repo mirrors it with a one-way sync script (ADR 0002). No second copy to keep up by hand.
-3. **URLs:** a missing URL (Token Keeper's live demo, for one) doesn't block a slice. The card shows only the links that exist, and the record check lists every missing URL as a warning. Filling them is a go-live item.
+2. **One source of truth:** `documents/portfolio/` stays the one place the record is edited, and this repo mirrors it with one copy command (ADR 0002, ADR 0007). No second copy to keep up by hand.
+3. **URLs:** a missing URL (Token Keeper's live demo, for one) doesn't block a slice. The card shows only the links that exist, and filling them is a go-live item.
 4. **Respiratory view backs Propeller** (`platform-consultant` for the provider portal and Epic, `walgreens-fhir-integration` for the inhaler data). Most of the FHIR work is Propeller's; the billing and eligibility projects are Kyros's.
 5. **Availability**, for /recruiters/ and `profile.availability`: full time, open to contract, can start any time, ideally remote but willing to discuss.
-6. **The Shipped log** gets built as structure now, from whatever curated entries have a public proof link. It can be thin or empty until Dan's go-live walkthrough.
+6. **The Shipped log** was planned as structure now. ADR 0007 moved it to Later, since there's nothing to show until Friday Setup is in use.
 7. **Domain:** free tiers only. The site stays on its `pages.dev` address.
 8. **Friday Setup and this repo:** Dan isn't using Friday Setup for a few weeks. When they start, keep this repo in (site work is real work), and have brag-curator drop PRs that only sync the record. Revisit if they crowd the inbox.
 9. **The kit's depth-filter finding** (ADR 0006): noted, not raised yet. Dan is staying practical and getting the pieces in place before committing to the full kit system. ADR 0006 works around it either way.
 
 ### The go-live check (blocking before the site is shared)
-A walkthrough with Dan before the site's URL goes anywhere: a résumé, LinkedIn, the GitHub profile, an application. The record check gets a `--go-live` mode that turns these warnings into errors, so the list can't be skipped silently.
+A walkthrough with Dan before the site's URL goes anywhere: a résumé, LinkedIn, the GitHub profile, an application. Dan and Claude walk through this list; it's a checklist, not a script (ADR 0007).
 1. **Read-through:** every mirrored record file has its read-log box checked (in `documents/archive/read-log.md`), or Dan names the exceptions.
 2. **URLs:** every project card's live, code and deep-dive links filled in, starting with Token Keeper's live demo, and `links.site` set.
 3. **Guardrails:** every page about employer work checked against the private guardrails.
 4. **Statuses:** each project's status and depth match its repo on the day.
 5. **Kit run:** the portfolio scorer (automated and checklist passes) run on the live site, with its fixes done or deferred with a reason.
-6. **GitHub:** the profile website, pins and repo website URLs point at the live site (slice 8 steps, each one approved).
+6. **GitHub:** the profile website, pins and repo website URLs point at the live site (slice 5 steps, each one approved).
 
 ### Still open
 - **Which Propeller story leads** on Respiratory view's card, if only one fits on it. Defaulting to `platform-consultant`.
