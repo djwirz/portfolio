@@ -1,0 +1,11 @@
+<!-- Source for public/og.png. Drawn square so macOS Quick Look renders it 1:1, then cropped to the middle 1200x630:
+     qlmanage -t -s 1200 -o . docs/og.svg && sips -c 630 1200 og.svg.png --out public/og.png -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200">
+  <rect width="1200" height="1200" fill="#111111"/>
+  <g transform="translate(0 285)">
+    <text x="80" y="210" font-family="Helvetica, Arial, sans-serif" font-size="40" fill="#a1a1a1">Dan Wirz</text>
+    <text x="80" y="295" font-family="Helvetica, Arial, sans-serif" font-size="76" font-weight="700" fill="#fafafa">Senior Software Engineer</text>
+    <text x="80" y="370" font-family="Helvetica, Arial, sans-serif" font-size="32" fill="#d4d4d4">Healthcare integrations, payments and legacy modernization</text>
+    <text x="80" y="520" font-family="Helvetica, Arial, sans-serif" font-size="28" fill="#a1a1a1">Public projects, each backing a real employer story</text>
+  </g>
+</svg>

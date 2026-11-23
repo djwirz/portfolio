@@ -30,8 +30,20 @@ pnpm build
 
 Then open a PR. `brag/inbox/` is never copied and is git-ignored. Fields the site needs that the record doesn't have yet are in [docs/record-additions.md](docs/record-additions.md).
 
-## Deploy (slice 4)
-Cloudflare Pages, connected to this repo through its Git integration (ADR 0007). Two build settings: build command `pnpm build`, output directory `dist`. Set `SITE_URL` to the production URL in the Pages project's environment variables.
+## Deploy
+Cloudflare Pages, connected to this repo through its Git integration (ADRs 0004 and 0007). Merges to `main` deploy to production; each PR from this repo gets a preview URL as a status check. Project settings:
+
+| Setting | Value |
+|---|---|
+| Production branch | `main` |
+| Framework preset | Astro (or None) |
+| Build command | `pnpm build` |
+| Build output directory | `dist` |
+| Root directory | `/` |
+| Environment variable `PNPM_VERSION` | `12.21.0` (the build image defaults to pnpm 10 and ignores `packageManager`) |
+| Environment variable `SITE_URL` | the production URL, for example `https://djwirz.pages.dev` |
+
+Node comes from `.nvmrc`. Response headers are in `public/_headers`. The link-preview image is `public/og.png`, drawn from `docs/og.svg`.
 
 ## Layout
 | Path | What |
