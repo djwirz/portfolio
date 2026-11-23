@@ -73,11 +73,12 @@ Skill names on cards use the same names as the résumé (the kit's lexicon), so 
 | **/work/** | Every project as a card, live ones first, then Building, Planned, Next | `artifacts`, `in_flight` |
 | **/work/&lt;slug&gt;/** | The project's deep dive: its case study (kit `templates/case-study.md`: outcome-first title; live, code and skills line; context, role and constraints, key decisions with ADR links, what went wrong including where AI was wrong, result; evidence). In-flight projects get a short page: the one-liner, the status, what it backs, the repo and its spec | `case-studies/<slug>.md`, the entry |
 | **/experience/&lt;slug&gt;/** | An employer story (the nine case studies in the record), with a "Proved in public by" line linking back to the projects that back it | `case-studies/<story>.md`, reverse of `backs` |
-| **/resume/** | HTML résumé, generated from the record, that prints to PDF. Email, no phone. Projects from `artifacts[]` only | `profile`, `experience` with `highlights` → `brag/entries`, `artifacts`, `education` |
+| **/resume/** | HTML résumé, generated from the record, that prints to PDF. Email, no phone. Projects from `artifacts[]` only. It's the **generic** résumé someone finds on the site: every default highlight, no length target. Tailored résumés for a posting are made with the kit, outside this repo | `profile`, `experience` with `highlights` → `brag/entries`, `artifacts`, `education` |
 | **/recruiters/** | Key facts (role, location, remote, availability from `profile.availability`: full time, open to contract, can start any time, ideally remote, core skills), three proof links (Holdfast live, Token Keeper, FHIR over MCP's eval results once they exist), email and LinkedIn | `profile`, `artifacts`, `links` |
 | **/about/** | Bio: Propeller, HYP, Kyros, the family business, teaching at Reboot Kamp, the UW research and poster | `profile`, `experience`, `education` |
 | **/contact/** | Email (`mailto:`) and LinkedIn (ADR 0005) | `profile.email`, `links` |
 | **/how-i-build/** | The method: spec and ADRs as PR #1, thin local-first slices, a live proof for each deploy step, Claude Code writing and Dan reviewing, and where AI was wrong (with links to real PR descriptions) | written once |
+| **/reading/** | Recent reads, technical or just thought-provoking, each with a few thoughts. Linked from /about/ and the footer | `reading/*.md` (site content written in this repo, not part of the mirrored record) |
 | *Later:* /shipped/, /decisions/, /writing/ | A Shipped log of curated wins with a public proof link, once Friday Setup is in use (ADR 0007); an index of every ADR across the project repos; case-study posts (phase 8) | `brag/entries`, each repo's `docs/adr/` |
 
 Every page has the same header (Work, Résumé, Recruiters, About, Contact) and a footer linking to GitHub, LinkedIn and /contact/, so every page has a contact path and a résumé link.
@@ -201,6 +202,8 @@ The site is being built to get the structure in place; **it isn't being shared w
 7. **Domain:** free tiers only. The site stays on its `pages.dev` address.
 8. **Friday Setup and this repo:** Dan isn't using Friday Setup for a few weeks. When they start, keep this repo in (site work is real work), and have brag-curator drop PRs that only sync the record. Revisit if they crowd the inbox.
 9. **The kit's depth-filter finding** (ADR 0006): noted, not raised yet. Dan is staying practical and getting the pieces in place before committing to the full kit system. ADR 0006 works around it either way.
+10. **The generic résumé** (/resume/) shows every default highlight with no length target, and the kit's lint findings on it (one bullet opening with "Helped", no phone) are accepted: it's the résumé people find, not one sent against a posting.
+11. **A reading page:** recent reads with thoughts, technical to thought-provoking, written as files in `reading/` here. Part of the skeleton now; its entries are a go-live review item.
 
 ### The go-live check (blocking before the site is shared)
 A walkthrough with Dan before the site's URL goes anywhere: a résumé, LinkedIn, the GitHub profile, an application. Dan and Claude walk through this list; it's a checklist, not a script (ADR 0007).
@@ -210,6 +213,7 @@ A walkthrough with Dan before the site's URL goes anywhere: a résumé, LinkedIn
 4. **Statuses:** each project's status and depth match its repo on the day.
 5. **Kit run:** the portfolio scorer (automated and checklist passes) run on the live site, with its fixes done or deferred with a reason.
 6. **GitHub:** the profile website, pins and repo website URLs point at the live site (slice 5 steps, each one approved).
+7. **Personal content:** Dan reviews the personal parts of /about/ (the hobbies line) and /reading/ (its entries, or whether to show it while it's empty).
 
 ### Still open
 - **Which Propeller story leads** on Respiratory view's card, if only one fits on it. Defaulting to `platform-consultant`.
