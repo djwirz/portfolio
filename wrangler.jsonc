@@ -4,6 +4,9 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "djwirz",
   "compatibility_date": "2026-11-23",
+  // Preview builds (non-production branches) run `npx wrangler preview`, which needs this
+  // block, even empty; the assets settings above it apply to previews too.
+  "previews": {},
   "assets": {
     "directory": "./dist",
     "not_found_handling": "404-page"
