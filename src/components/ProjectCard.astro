@@ -3,15 +3,18 @@ import { projectSlug, statusOf, STATUS_LABEL, type Project } from "../lib/record
 
 interface Props {
   project: Project;
+  /** The card's heading level: h3 under the home page's "The work" h2, h2 on /work/. */
+  level?: 2 | 3;
 }
 
-const { project } = Astro.props;
+const { project, level = 3 } = Astro.props;
+const Heading = level === 2 ? "h2" : "h3";
 const status = statusOf(project);
 const deepDive = `/work/${projectSlug(project.name)}/`;
 ---
 <article class="flex flex-col rounded-lg border border-border p-5">
   <div class="flex flex-wrap items-center justify-between gap-2">
-    <h3 class="text-lg font-semibold"><a href={deepDive} class="hover:underline">{project.name}</a></h3>
+    <Heading class="text-lg font-semibold"><a href={deepDive} class="hover:underline">{project.name}</a></Heading>
     <span class:list={["rounded-full px-2 py-0.5 text-xs font-medium", status === "live" ? "bg-primary text-primary-foreground" : "border border-border text-muted-foreground"]}>
       {STATUS_LABEL[status]}
     </span>
