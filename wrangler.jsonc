@@ -1,0 +1,17 @@
+// Cloudflare Workers with static assets only: no Worker script, just dist/ (ADR 0008).
+// Workers Builds runs `pnpm build`, then `npx wrangler deploy` with the version pinned in package.json.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "djwirz",
+  "compatibility_date": "2026-11-23",
+  // Preview builds (non-production branches) run `npx wrangler preview`, which needs this
+  // block, even empty; the assets settings above it apply to previews too.
+  "previews": {},
+  // Gives each preview a URL like https://<branch>-djwirz.<subdomain>.workers.dev. Takes
+  // effect once production has deployed with it (a merge to main).
+  "preview_urls": true,
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}
