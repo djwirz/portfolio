@@ -17,7 +17,7 @@ State read on 2026-11-23 with `gh` (read-only): no bio, no website, location "Mi
 | 7 | `token-keeper`: website, topics | the site's /work/token-keeper/ (until there's a live demo, go-live item 2) · python, aws-lambda, amazon-sqs, amazon-dynamodb, amazon-eventbridge, aws-kms, aws-cdk, oauth | yes | yes |
 | 8 | `fhir-over-mcp`: website, topics | the site's /work/fhir-over-mcp/ · python, mcp, fhir, evals, llm | yes | yes |
 | 9 | `coverage-check`: website, topics | the site's /work/coverage-check/ · python, fastapi, postgresql, fhir, kubernetes, docker | yes | yes |
-| 10 | `holdfast-ex`: website, topics | the site's /work/holdfast-ex/ · elixir, otp, event-sourcing, postgresql, stripe | | |
+| 10 | `holdfast-ex`: website, topics | the site's /work/holdfast-ex/ · elixir, otp, event-sourcing, postgresql, stripe | yes | yes |
 | 11 | `portfolio`: website | https://djwirz.withered-smoke-b9b4.workers.dev | | |
 | 12 | Pins | Already done by Dan: all five projects plus `portfolio` are pinned (read 2026-11-23). They show as coverage-check, fhir-over-mcp, holdfast, holdfast-ex, token-keeper, portfolio; matching the site's order (holdfast, token-keeper, fhir-over-mcp, coverage-check, holdfast-ex) means dragging them in the GitHub UI, if Dan wants that | yes | yes |
 
