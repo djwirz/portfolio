@@ -12,7 +12,7 @@ State read on 2026-11-23 with `gh` (read-only): no bio, no website, location "Mi
 | 2 | Profile website | https://djwirz.withered-smoke-b9b4.workers.dev | yes | yes |
 | 3 | Profile location | Eau Claire, WI (Dan, 2026-11-23: currently in Eau Claire; was Minneapolis, MN) | yes | yes |
 | 4 | Create public repo `djwirz/djwirz` | Description "Profile README", a one-line README to start | yes | yes |
-| 5 | Profile README | A PR in `djwirz/djwirz`, from the kit's `templates/github-profile-readme.md` and the record only: [djwirz/djwirz#1](https://github.com/djwirz/djwirz/pull/1), done when Dan merges it | yes | |
+| 5 | Profile README | A PR in `djwirz/djwirz`, from the kit's `templates/github-profile-readme.md` and the record only: [djwirz/djwirz#1](https://github.com/djwirz/djwirz/pull/1), merged 2026-11-23 | yes | yes |
 | 6 | `holdfast`: website, topics | https://holdfast-production-ba968615.up.railway.app · typescript, nodejs, postgresql, stripe, redis, server-sent-events, playwright, opentelemetry | yes | yes |
 | 7 | `token-keeper`: website, topics | the site's /work/token-keeper/ (until there's a live demo, go-live item 2) · python, aws-lambda, amazon-sqs, amazon-dynamodb, amazon-eventbridge, aws-kms, aws-cdk, oauth | yes | yes |
 | 8 | `fhir-over-mcp`: website, topics | the site's /work/fhir-over-mcp/ · python, mcp, fhir, evals, llm | yes | yes |

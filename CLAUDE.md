@@ -3,7 +3,7 @@
 Dan's public portfolio repo: the career record (`portfolio.json`, `brag/`, `case-studies/`, `decisions/`) and the static site built from it, in one repo (ADR 0002). One record, many views: the site, the GitHub profile README, the résumé and LinkedIn are all built from the record. Use they/them for Dan.
 
 ## Status
-Slice 4 of 5 (spec §13): live at https://djwirz.withered-smoke-b9b4.workers.dev (Cloudflare Workers static assets, ADR 0008), not shared until the go-live check (spec §14). The first kit scorer run: 100 automated, 68 with the VWC checklist pass; the gaps are go-live item 8. Next: slice 5 (GitHub profile, pins, repo settings, old-repo list).
+All five slices are done (spec §13): live at https://djwirz.withered-smoke-b9b4.workers.dev (Cloudflare Workers static assets, ADR 0008), not shared until the go-live check (spec §14). Slice 5 set up GitHub (profile README in `djwirz/djwirz`, bio, website, pins, repo websites and topics, old repos archived or made private; the record is `docs/github-review.md`). The first kit scorer run: 100 automated, 68 with the VWC checklist pass; the gaps are go-live item 8. GitHub score 82, sync check 4 of 4. Next: the go-live check (spec §14).
 
 ## Commands
 - Node 22.23+ (`.nvmrc` for CI), pnpm from `packageManager`.
