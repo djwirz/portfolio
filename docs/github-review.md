@@ -10,7 +10,7 @@ State read on 2026-11-23 with `gh` (read-only): no bio, no website, location "Mi
 |---|---|---|---|---|
 | 1 | Profile bio | Senior Software Engineer: healthcare integrations, payments and legacy modernization. | | |
 | 2 | Profile website | https://djwirz.withered-smoke-b9b4.workers.dev | | |
-| 3 | Profile location | Eau Claire, WI (the record), or keep Minneapolis, MN: Dan's call | | |
+| 3 | Profile location | Eau Claire, WI (Dan, 2026-11-23: currently in Eau Claire; GitHub still says Minneapolis, MN) | | |
 | 4 | Create public repo `djwirz/djwirz` | Description "Profile README", a one-line README to start | | |
 | 5 | Profile README | A PR in `djwirz/djwirz`, from the kit's `templates/github-profile-readme.md` and the record only | | |
 | 6 | `holdfast`: website, topics | https://holdfast-production-ba968615.up.railway.app · typescript, nodejs, postgresql, stripe, redis, server-sent-events, playwright, opentelemetry | | |
@@ -19,7 +19,7 @@ State read on 2026-11-23 with `gh` (read-only): no bio, no website, location "Mi
 | 9 | `coverage-check`: website, topics | the site's /work/coverage-check/ · python, fastapi, postgresql, fhir, kubernetes, docker | | |
 | 10 | `holdfast-ex`: website, topics | the site's /work/holdfast-ex/ · elixir, otp, event-sourcing, postgresql, stripe | | |
 | 11 | `portfolio`: website | https://djwirz.withered-smoke-b9b4.workers.dev | | |
-| 12 | Pins, in the site's order | holdfast, token-keeper, fhir-over-mcp, coverage-check, holdfast-ex (a sixth, `portfolio`, is Dan's call). Done by Dan in the GitHub UI: there's no API for pins (verify) | | |
+| 12 | Pins | Already done by Dan: all five projects plus `portfolio` are pinned (read 2026-11-23). They show as coverage-check, fhir-over-mcp, holdfast, holdfast-ex, token-keeper, portfolio; matching the site's order (holdfast, token-keeper, fhir-over-mcp, coverage-check, holdfast-ex) means dragging them in the GitHub UI, if Dan wants that | yes | yes |
 
 Topics come from each project's `skills[]` in `portfolio.json`, lowercased and hyphenated. A topic says what a repo uses; it doesn't claim the skill is proven (ADR 0006).
 
