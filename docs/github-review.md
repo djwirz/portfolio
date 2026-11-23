@@ -25,38 +25,38 @@ Topics come from each project's `skills[]` in `portfolio.json`, lowercased and h
 
 ## Old public repos
 
-Every public repo that isn't one of the five projects or this one: 28, three more than the spec first listed (the three 2015–2016 forks at the bottom). Suggestions use the least destructive option that does the job; deleting isn't suggested. **Dan decides each row, and each change is its own approval.**
+Every public repo that isn't one of the five projects or this one: 28, three more than the spec first listed (the three 2015–2016 forks at the bottom). Suggestions use the least destructive option that does the job; deleting isn't suggested. Dan (2026-11-23): no per-row approval needed for these, "do what you think is best". Claude made the changes the same day; the last column is what was done.
 
-| Repo | Fork | Archived | Last push | Suggested | Why | Dan's decision |
+| Repo | Fork | Archived | Last push | Suggested | Why | Done |
 |---|---|---|---|---|---|---|
-| bh-irv6 | | | 2026-04 | Make private | Recent but not part of the story; a reader can't tell what it is | |
-| padre-ginos | | | 2026-04 | Make private | Looks like a course project (verify), not Dan's own work | |
-| rogers-photo-gallery | | | 2025-05 | Archive | Personal project, finished | |
-| encore-workout-api | | | 2025-03 | Archive | One of five workout/Notion repos that overlap; reads as noise beside the five projects | |
-| faura-take-home | | | 2025-03 | Make private | A take-home for a company; better not public | |
-| workout-app-api-enco | | | 2025-03 | Archive | Workout set | |
-| workout-app-api | | | 2025-03 | Archive | Workout set | |
-| workout-app | | | 2025-03 | Archive | Workout set | |
-| notion-railway-api | | | 2025-03 | Archive | Workout set | |
-| notion-api | | | 2025-02 | Archive | Workout set | |
-| notion-workout-api | | yes | 2025-02 | Keep archived | Already archived | |
-| cover-letter-ai | | | 2025-01 | Archive | Superseded; the kit does this now | |
-| cover-letter-generation | | | 2025-01 | Archive | Same as cover-letter-ai | |
-| docker_postgres_with_data | yes | yes | 2022-02 | Make private | Fork, no changes shown | |
-| code-challenge-100-plus | | yes | 2021-12 | Keep archived | Already archived | |
-| smart-on-fhir-tutorial | yes | yes | 2019-08 | Keep archived | Fork, but SMART on FHIR is relevant to Respiratory view | |
-| techScreen | | | 2017-03 | Make private | Interview exercise, 2017 | |
-| sniptuck | | yes | 2017-02 | Keep archived | Already archived | |
-| DataStructures-Algorithms | yes | | 2016-11 | Make private | Fork, 2016 | |
-| hyper | yes | | 2016-10 | Make private | Fork of someone else's product | |
-| Legit2.0 | yes | | 2016-09 | Make private | Fork, 2016 | |
-| LoremIpsumElectron | | | 2016-09 | Archive | Early personal project | |
-| greenfield-1 | yes | | 2016-09 | Make private | Fork, bootcamp era | |
-| AWS_Tutorial | yes | | 2016-09 | Make private | Tutorial fork | |
-| react-tutorial | yes | | 2016-09 | Make private | Tutorial fork | |
-| recursion-prompts | yes | | 2016-04 | Make private | Fork, bootcamp prep | |
-| fullstack-course1-module2 | yes | | 2015-12 | Make private | Course fork | |
-| algo-time-complexity-review | yes | | 2015-10 | Make private | Fork | |
+| bh-irv6 | | | 2026-04 | Make private | Recent but not part of the story; a reader can't tell what it is | Made private |
+| padre-ginos | | | 2026-04 | Make private | Looks like a course project (verify), not Dan's own work | Made private |
+| rogers-photo-gallery | | | 2025-05 | Archive | Personal project, finished | Archived |
+| encore-workout-api | | | 2025-03 | Archive | One of five workout/Notion repos that overlap; reads as noise beside the five projects | Archived |
+| faura-take-home | | | 2025-03 | Make private | A take-home for a company; better not public | Made private |
+| workout-app-api-enco | | | 2025-03 | Archive | Workout set | Archived |
+| workout-app-api | | | 2025-03 | Archive | Workout set | Archived |
+| workout-app | | | 2025-03 | Archive | Workout set | Archived |
+| notion-railway-api | | | 2025-03 | Archive | Workout set | Archived |
+| notion-api | | | 2025-02 | Archive | Workout set | Archived |
+| notion-workout-api | | yes | 2025-02 | Keep archived | Already archived | Kept archived |
+| cover-letter-ai | | | 2025-01 | Archive | Superseded; the kit does this now | Archived |
+| cover-letter-generation | | | 2025-01 | Archive | Same as cover-letter-ai | Archived |
+| docker_postgres_with_data | yes | yes | 2022-02 | Keep archived | Fork, no changes shown; a public fork can't be made private (verify) | Kept archived |
+| code-challenge-100-plus | | yes | 2021-12 | Keep archived | Already archived | Kept archived |
+| smart-on-fhir-tutorial | yes | yes | 2019-08 | Keep archived | Fork, but SMART on FHIR is relevant to Respiratory view | Kept archived |
+| techScreen | | | 2017-03 | Make private | Interview exercise, 2017 | Made private |
+| sniptuck | | yes | 2017-02 | Keep archived | Already archived | Kept archived |
+| DataStructures-Algorithms | yes | | 2016-11 | Archive | Fork, 2016; a public fork can't be made private (verify) | Archived |
+| hyper | yes | | 2016-10 | Archive | Fork of someone else's product; a public fork can't be made private (verify) | Archived |
+| Legit2.0 | yes | | 2016-09 | Archive | Fork, 2016; a public fork can't be made private (verify) | Archived |
+| LoremIpsumElectron | | | 2016-09 | Archive | Early personal project | Archived |
+| greenfield-1 | yes | | 2016-09 | Archive | Fork, bootcamp era; a public fork can't be made private (verify) | Archived |
+| AWS_Tutorial | yes | | 2016-09 | Archive | Tutorial fork; a public fork can't be made private (verify) | Archived |
+| react-tutorial | yes | | 2016-09 | Archive | Tutorial fork; a public fork can't be made private (verify) | Archived |
+| recursion-prompts | yes | | 2016-04 | Archive | Fork, bootcamp prep; a public fork can't be made private (verify) | Archived |
+| fullstack-course1-module2 | yes | | 2015-12 | Archive | Course fork; a public fork can't be made private (verify) | Archived |
+| algo-time-complexity-review | yes | | 2015-10 | Archive | Fork; a public fork can't be made private (verify) | Archived |
 
 Archiving makes a repo read-only and can be undone in its settings. Making one private can be undone too, but it drops the repo's stars and watchers, and they don't come back when it's made public again (verify).
 
