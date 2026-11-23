@@ -21,4 +21,4 @@ Dan Wirz's career record and the site built from it. The record (`portfolio.json
 | `docs/` | Spec, artifact spec, ADRs |
 
 ## Checks
-Secret scan with [gitleaks](https://github.com/gitleaks/gitleaks) on every PR. The record check, build and page checks arrive in slices 1 and 2.
+Secret scan with [gitleaks](https://github.com/gitleaks/gitleaks) on every PR. From slice 1, CI also runs `astro build`, which validates the record. The kit's portfolio scorer checks the live site (ADR 0007).

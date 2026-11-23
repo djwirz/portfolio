@@ -9,7 +9,7 @@ Dan's career record and the site built from it: each public project shown beside
 Provisional until kit step 1 produces `resume-score.json`. Few skills on its own, by design: the site is the map to the proof, and the projects are the proof.
 - **HTML and CSS**, with accessibility (one of the lane's high-lift skills in the 2026-11-16 baseline).
 - **TypeScript** and a static build with typed content (ADR 0003).
-- **CI/CD** with secret scanning and per-PR previews (ADR 0004).
+- **CI/CD** with secret scanning, a build check on every PR, and per-PR previews (ADR 0007).
 - **AI-assisted development**, shown on /how-i-build/ and in every PR's "How AI was used".
 
 ## Problem and users
@@ -24,10 +24,10 @@ Provisional until kit step 1 produces `resume-score.json`. Few skills on its own
 - **Must have:**
   - The record mirrored into the repo from `documents/portfolio/`: `portfolio.json`, `brag/entries/`, `case-studies/`, `decisions/` (slice 1), with `brag/inbox/` git-ignored.
   - Every page pre-rendered to static HTML (ADR 0003).
-  - Home, /work/ with a card for each project, /work/<slug>/ deep dives, /experience/<slug>/ employer stories, /resume/ generated from the record, /recruiters/, /about/, /contact/, /how-i-build/, and a Shipped log from `brag/entries/`.
+  - Home, /work/ with a card for each project, /work/<slug>/ deep dives, /experience/<slug>/ employer stories, /resume/ generated from the record, /recruiters/, /about/, /contact/ and /how-i-build/. A Shipped log waits until Friday Setup is in use (ADR 0007).
   - Cards with status and "Backs" (ADR 0006).
   - Head tags the scorer reads: title, description, viewport, `lang`, Open Graph image, JSON-LD `Person`; `robots.txt` and `sitemap.xml`.
-  - Deployed on a free host with HTTPS and PR previews (ADR 0004).
+  - Deployed on a free host with HTTPS and PR previews (ADRs 0004 and 0007).
   - A kit portfolio-scorer run, with its fixes.
   - The GitHub profile README (`djwirz/djwirz`), pins, and a website URL and topics on the five project repos, each step approved by Dan.
 - **Nice to have:**
@@ -58,17 +58,17 @@ Provisional until kit step 1 produces `resume-score.json`. Few skills on its own
 
 ## Quality plan
 - **Tests:**
-  - Record validation at build time: schema, `backs` targets exist, `highlights` refs resolve to brag headings, status and depth agree, no `phone` (spec §10).
-  - A post-build check over `dist/`: every page has its text in the HTML, one H1, a title, a description, `lang`; every internal link resolves.
-  - Unit tests for the record-to-page helpers (the resume projection, the Shipped log parser).
+  - Record validation in the build, through Astro's content schemas: `backs` targets exist, `highlights` refs resolve to brag headings, status and depth agree, no `phone` (spec §10, ADR 0007).
+  - The kit's `portfolio_audit.py` against the live site as the page check, at deploy and at go-live.
+  - Unit tests only where logic earns them (likely the résumé projection).
 - **Evals:** none; there's no AI feature.
 - **Observability:** the host's built-in request analytics only. Nothing runs, so there's nothing else to watch.
 - **Accessibility and performance:**
   - Semantic HTML, keyboard reachable, visible focus, alt text on every image, colour contrast that passes WCAG AA.
   - Lighthouse accessibility, SEO and performance in the green on home, /work/ and /resume/.
   - /resume/ prints cleanly to PDF on one or two pages.
-- **Security basics:** no secrets in the repo (gitleaks in CI from PR #1); the deploy token scoped to Pages only; no third-party scripts.
-- **CI/CD:** every PR runs gitleaks, then (from slice 2) the record check, the build, the post-build check and a preview deploy. Merges to `main` deploy to production.
+- **Security basics:** no secrets in the repo (gitleaks in CI from PR #1); no deploy secrets (Cloudflare's Git integration); no third-party scripts.
+- **CI/CD:** every PR runs gitleaks and `astro build`, and Cloudflare builds a preview. Merges to `main` deploy to production.
 
 ## Depth target
 Current rung: 0 · Target rung: 3 (engineered: deployed, CI, ADRs, checks on every build)
@@ -76,5 +76,5 @@ Current rung: 0 · Target rung: 3 (engineered: deployed, CI, ADRs, checks on eve
 ## Build stack (in order)
 1. The record: `portfolio.json` and Markdown, validated with zod.
 2. Astro (static output), TypeScript, Tailwind (ADR 0003). Node LTS and pnpm.
-3. GitHub Actions: gitleaks, build, checks, Wrangler deploy.
-4. Cloudflare Pages (ADR 0004).
+3. GitHub Actions: gitleaks and the build.
+4. Cloudflare Pages with its Git integration (ADRs 0004 and 0007).
