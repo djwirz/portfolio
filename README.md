@@ -2,7 +2,7 @@
 
 Dan Wirz's career record and the site built from it. The record (`portfolio.json`, curated brag entries and case studies) is the source; the site, the GitHub profile, the résumé and LinkedIn are views of it. Each public project is shown beside the employer story it retells.
 
-**Status:** slice 4 of 5: deploying to Cloudflare. Live at https://djwirz.withered-smoke-b9b4.workers.dev once this slice merges; not shared until the go-live check (spec §14). Design: [docs/spec.md](docs/spec.md), [docs/artifact-spec.md](docs/artifact-spec.md) and [docs/adr/](docs/adr/).
+**Status:** slice 4 of 5: live at https://djwirz.withered-smoke-b9b4.workers.dev, not shared until the go-live check (spec §14). Design: [docs/spec.md](docs/spec.md), [docs/artifact-spec.md](docs/artifact-spec.md) and [docs/adr/](docs/adr/).
 
 ## How it fits together
 - **The record:** the [ai-era-job-kit](https://github.com/Vets-Who-Code/ai-era-job-kit)'s portfolio format, with two extra fields (`status`, `backs`) and an `in_flight` list for projects that haven't shipped ([ADR 0006](docs/adr/0006-status-and-backs-fields-and-in-flight-projects.md)).
