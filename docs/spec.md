@@ -94,10 +94,10 @@ Every page has the same header (Work, Résumé, Recruiters, About, Contact) and 
 
 ## 6. Build
 - **Astro, static output, TypeScript, Tailwind** (ADR 0003). No client JavaScript by default.
-- **Content collections** load `portfolio.json` and `case-studies/*.md` through zod schemas; `brag/entries/*.md` through a small parser of the kit's brag format (`## Org`, `### Accomplishment`, `- Impact:`, `- Skills:`, `- Portfolio artifact:`, `- Proof:`), for /resume/. Entries with `status: raw` are never read. The schemas are the record check (§10).
+- **The record** is loaded once in `src/lib/record.ts`: `portfolio.json` parsed with zod, and the brag entries and case studies read as raw text at build time (`import.meta.glob`). Brag entries go through a small parser of the kit's format (`## Org`, `### Accomplishment`, `- Impact:`, `- Skills:`, `- Portfolio artifact:`, `- Proof:`), for the highlight check and /resume/. The schema and checks are the record check (§10). Slice 2 may move the case studies into a content collection, to render their Markdown.
 - **Slugs** come from the record: a project's from its `name`, a story's from its file name.
 - **Head tags on every page:** `<html lang="en">`, a title of at least a few words, a description of a sentence or two, the viewport meta, an Open Graph title, description and image, and on home a JSON-LD `Person` built from `profile` and `links`.
-- **Generated files:** `sitemap.xml` (Astro's sitemap integration) and `robots.txt` allowing everything and pointing at the sitemap.
+- **Generated files:** `sitemap.xml` from a small endpoint over `src/lib/routes.ts`, and `robots.txt` allowing everything and pointing at it. Not Astro's sitemap integration: it writes `sitemap-index.xml`, and the kit's scorer fetches `/sitemap.xml` exactly (found in slice 1).
 - **Output:** `dist/<route>/index.html` for every page, plus assets.
 
 ## 7. What the kit's portfolio scorer checks, and how the site passes

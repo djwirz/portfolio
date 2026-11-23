@@ -1,0 +1,151 @@
+{
+  "_about": "Master record for the job search, in the ai-era-job-kit format. Public-safe: resume, LinkedIn and GitHub are generated from this file and the curated entries in brag/entries. Caveats, open questions and the do-not-claim list live in ../archive/guardrails.md, which is private.",
+  "profile": {
+    "name": "Daniel J. Wirz",
+    "preferred_name": "Dan",
+    "headline": "Senior software engineer who makes other people's systems work with yours: healthcare integrations, payments and legacy modernization",
+    "target_role": "Senior Software Engineer",
+    "onet_code": "15-1252.00",
+    "summary": "I make other people's systems work with yours, in places where mistakes cost money or care. At Propeller Health I connected a Class II medical-device platform to Walgreens and Express Scripts and helped make its provider portal work inside Epic; at HYP I was one of two founding engineers on a real-time auction platform where no bid counted until a Stripe hold guaranteed it; at Kyros I automated monthly insurance eligibility checks for 1,000–2,000 patients. I work across backend, frontend, data and AWS, and I'm usually the engineer translating between partners, founders or operations staff and the code.",
+    "location": "Eau Claire, WI",
+    "email": "djwirz@gmail.com"
+  },
+  "links": {
+    "github": "https://github.com/djwirz",
+    "linkedin": "https://www.linkedin.com/in/djwirz"
+  },
+  "experience": [
+    {
+      "title": "Operations & Technology",
+      "org": "Wally's Vending",
+      "location": "Eau Claire, WI",
+      "start": "2025-05",
+      "end": "present",
+      "highlights": [
+        "brag/entries/2026-11-13.md#added-card-and-mobile-wallet-readers-to-a-family-vending-business-and-built-sales-analysis-to-guide-stocking"
+      ]
+    },
+    {
+      "title": "Senior Software Engineer",
+      "org": "Kyros",
+      "location": "Minneapolis, MN",
+      "start": "2023-04",
+      "end": "2024-10",
+      "highlights": [
+        "brag/entries/2024-10-31.md#automated-monthly-insurance-eligibility-checks-for-1-000-2-000-active-patients-through-the-inovalon-api",
+        "brag/entries/2024-10-31.md#kept-eligibility-runs-under-the-vendor-s-200-request-per-minute-limit-with-20-concurrent-workers",
+        "brag/entries/2024-10-31.md#wrote-an-rfc-recommending-sqs-and-lambda-for-background-workers-then-built-on-the-team-s-choice-of-pg-boss",
+        "brag/entries/2024-10-31.md#helped-turn-the-billing-dashboard-from-a-claim-md-search-tool-into-a-reconciliation-workspace",
+        "brag/entries/2024-10-31.md#delivered-about-a-dozen-large-refactors-in-a-live-react-typescript-and-express-monolith",
+        "brag/entries/2024-10-31.md#mentored-3-junior-engineers-through-code-review-pairing-and-scoped-handoffs"
+      ]
+    },
+    {
+      "title": "Founding Engineer",
+      "org": "HYP",
+      "location": "New York, NY (remote)",
+      "start": "2021-12",
+      "end": "2023-03",
+      "highlights": [
+        "brag/entries/2023-03-31.md#took-a-greenfield-real-time-auction-platform-from-founder-goals-to-launch-in-about-15-months",
+        "brag/entries/2023-03-31.md#designed-bid-payment-assurance-no-bid-counted-until-a-stripe-authorization-hold-confirmed-it",
+        "brag/entries/2023-03-31.md#resolved-near-simultaneous-bids-in-a-postgresql-transaction-ordered-by-stripe-hold-confirmation",
+        "brag/entries/2023-03-31.md#pushed-live-bid-updates-to-each-auction-page-with-graphql-subscriptions-over-redis",
+        "brag/entries/2023-03-31.md#designed-and-built-alone-an-instagram-verification-service-on-aws-lambda-sqs-and-dynamodb-that-granted-blue-checks-by-matching-handles",
+        "brag/entries/2023-03-31.md#co-built-an-internal-npm-package-that-deployed-docker-containers-to-aws-ecs",
+        "brag/entries/2023-03-31.md#tested-mission-critical-auction-workflows-with-jest-reaching-about-75-coverage"
+      ]
+    },
+    {
+      "title": "Full Stack Engineer",
+      "org": "Propeller Health",
+      "location": "Madison, WI",
+      "start": "2019-09",
+      "end": "2021-10",
+      "highlights": [
+        "brag/entries/2021-10-31.md#made-the-provider-portal-work-inside-epic-s-legacy-internet-explorer-environment",
+        "brag/entries/2021-10-31.md#supported-a-few-dozen-research-and-clinical-programs-usually-15-20-at-a-time"
+      ]
+    },
+    {
+      "title": "Platform Consultant",
+      "org": "Propeller Health",
+      "location": "Madison, WI",
+      "start": "2018-05",
+      "end": "2019-09",
+      "highlights": [
+        "brag/entries/2021-10-31.md#built-a-standalone-oauth-service-that-sent-consented-patient-data-to-walgreens-new-fhir-server",
+        "brag/entries/2021-10-31.md#owned-the-code-redemption-service-behind-an-express-scripts-mail-campaign",
+        "brag/entries/2021-10-31.md#set-up-and-deployed-separate-aws-stacks-for-partner-services-later-with-the-serverless-framework",
+        "brag/entries/2021-10-31.md#built-partner-and-research-data-reports-in-python-and-pandas-in-dozens-of-file-formats",
+        "brag/entries/2021-10-31.md#served-as-the-platform-s-technical-voice-in-partner-conversations"
+      ]
+    },
+    {
+      "title": "Full Stack Engineer",
+      "org": "Propeller Health",
+      "location": "Madison, WI",
+      "start": "2017-05",
+      "end": "2018-05",
+      "highlights": [
+        "brag/entries/2021-10-31.md#wrote-a-large-share-of-the-generated-api-tests-for-class-ii-medical-device-software",
+        "brag/entries/2021-10-31.md#shipped-code-under-medical-device-audit-rules-every-change-tied-to-a-jira-ticket-and-reviewed"
+      ]
+    },
+    {
+      "title": "Volunteer Instructor",
+      "org": "Reboot Kamp",
+      "location": "Amman, Jordan",
+      "start": "2016-12",
+      "end": "2017-04",
+      "highlights": [
+        "brag/entries/2017-04-30.md#taught-the-second-cohort-of-a-four-month-software-engineering-immersive-for-refugees-and-jordanians-in-amman",
+        "brag/entries/2017-04-30.md#helped-pitch-rebootkamp-for-malala-fund-support-at-the-2017-no-lost-generation-ed-tech-summit-in-amman",
+        "brag/entries/2017-04-30.md#coached-students-through-their-final-projects-including-deploying-them-to-aws"
+      ]
+    }
+  ],
+  "artifacts": [],
+  "_artifacts_note": "Empty on purpose for now: public projects (GitHub, live demos) come in a later pass. Case studies of employer work live in case-studies/ and are not artifacts in the kit's sense, since there is no public repo or live link.",
+  "education_line": "Hack Reactor, 2016. Chemistry and Biology coursework, University of Wisconsin–Madison, 2008–2012. About three years of research in the Biophysics Instrumentation Facility; co-author with Darrell R. McCaslin of the poster \"Exploitation of Variable Pathlength Spectroscopy for the Spectroscopic Characterization and Quantitation of Proteins and Peptides\".",
+  "education": {
+    "institution": "University of Wisconsin–Madison",
+    "attendance": "2008–2012",
+    "fields": [
+      "Chemistry",
+      "Biology"
+    ],
+    "degree": "none (coursework only)",
+    "research": {
+      "group": "Biophysics Instrumentation Facility, Department of Biochemistry",
+      "duration": "about three years",
+      "topics": [
+        "Variable pathlength spectroscopy",
+        "Protein and peptide quantitation",
+        "Extinction coefficients",
+        "Instrument alpha testing"
+      ]
+    },
+    "publications": [
+      {
+        "title": "Exploitation of Variable Pathlength Spectroscopy for the Spectroscopic Characterization and Quantitation of Proteins and Peptides",
+        "authors": [
+          "Darrell R. McCaslin",
+          "Daniel J. Wirz"
+        ],
+        "type": "conference poster (Abstract 393)",
+        "summary": "Used the C Technologies SoloVPE on a Cary 50 to quantitate proteins from the slope of absorbance against pathlength, removing serial dilutions, and to measure the full extinction spectrum of bovine serum albumin; results agreed with a Cary 400 in under an hour versus several hours.",
+        "url": "https://www.repligen.com/ctech-resources/pdf/University-of-Wisconsin-Characterization-and-Quantitation-of-Proteins-and-Peptides.pdf"
+      }
+    ],
+    "bootcamp": {
+      "institution": "Hack Reactor",
+      "dates": "2016"
+    }
+  },
+  "brag": {
+    "entries": "brag/entries",
+    "inbox": "brag/inbox",
+    "_note": "One curated entry file per role, named for the role's end date (the current role uses the date it was written). Each file is a pool of single accomplishments; experience[].highlights is the default selection, and a tailored resume picks a different set per job description. Unconfirmed claims wait in brag/inbox until confirmed or dropped."
+  }
+}
