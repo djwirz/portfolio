@@ -11,6 +11,7 @@ Slice 3 of 5 (spec §13): every page in the header exists: home, /work/ and the 
 - `pnpm record:copy`: mirrors the record from `~/projects/documents/portfolio/` (or `RECORD_SRC`). The only way record files change here.
 - New static pages go in `src/lib/routes.ts` so they're in `sitemap.xml` (the kit's scorer fetches that exact path); pages built from the record are derived there already.
 - The preview server for the browser pane is `.claude/launch.json` (`portfolio-preview`).
+- `reading/*.md` holds /reading/ entries (front matter: title, author, kind, read as YYYY-MM, optional link; the body is Dan's thoughts). It's site content written here, not mirrored. `reading/_example.md` shows the format and is never published.
 - Case studies render through the `caseStudies` collection (`src/content.config.ts`). Each one's own `# ` title is its page's H1, so the page doesn't add another.
 
 ## How we work

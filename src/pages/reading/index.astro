@@ -1,0 +1,31 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import { displayName } from "../../lib/record";
+import { niceDate } from "../../lib/resume";
+
+const entries = (await getCollection("reading")).sort((a, b) => b.data.read.localeCompare(a.data.read));
+const rendered = await Promise.all(entries.map(async (e) => ({ e, Content: (await render(e)).Content })));
+const KIND = { technical: "Technical", "thought-provoking": "Thought-provoking" } as const;
+---
+<Base title={`Reading: what ${displayName} has read lately`} description="Recent reads, from technical books and articles to the merely thought-provoking, with a few honest thoughts on each.">
+  <h1 class="text-3xl font-semibold tracking-tight">Reading</h1>
+  <p class="mt-3 max-w-2xl text-muted-foreground">
+    Recent reads, technical and otherwise, with a few thoughts on each.
+  </p>
+  {rendered.length === 0 ? (
+    <p class="mt-8 text-muted-foreground">Nothing here yet.</p>
+  ) : (
+    <ul class="mt-8 space-y-10">
+      {rendered.map(({ e, Content }) => (
+        <li>
+          <h2 class="text-xl font-semibold">
+            {e.data.link ? <a href={e.data.link} class="underline underline-offset-2">{e.data.title}</a> : e.data.title}
+          </h2>
+          <p class="text-sm text-muted-foreground">{e.data.author} · {KIND[e.data.kind]} · read {niceDate(e.data.read)}</p>
+          <div class="prose mt-3"><Content /></div>
+        </li>
+      ))}
+    </ul>
+  )}
+</Base>

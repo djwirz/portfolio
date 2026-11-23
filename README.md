@@ -41,6 +41,7 @@ Cloudflare Pages, connected to this repo through its Git integration (ADR 0007).
 | `brag/inbox/` | Raw pulls; git-ignored, never committed |
 | `case-studies/` | Employer stories, and later one deep dive per project (mirrored) |
 | `decisions/` | Decision notes about employer work (mirrored) |
+| `reading/` | /reading/ entries: one Markdown file per read, written here (copy `_example.md`) |
 | `src/lib/` | Record loading and checks (`record.ts`), brag parser, routes for the sitemap |
 | `src/layouts/`, `src/pages/` | The site |
 | `docs/` | Spec, artifact spec, ADRs, record additions |
