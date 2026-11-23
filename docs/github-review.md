@@ -10,7 +10,7 @@ State read on 2026-11-23 with `gh` (read-only): no bio, no website, location "Mi
 |---|---|---|---|---|
 | 1 | Profile bio | Senior Software Engineer: healthcare integrations, payments and legacy modernization. | yes | yes |
 | 2 | Profile website | https://djwirz.withered-smoke-b9b4.workers.dev | yes | yes |
-| 3 | Profile location | Eau Claire, WI (Dan, 2026-11-23: currently in Eau Claire; GitHub still says Minneapolis, MN) | | |
+| 3 | Profile location | Eau Claire, WI (Dan, 2026-11-23: currently in Eau Claire; was Minneapolis, MN) | yes | yes |
 | 4 | Create public repo `djwirz/djwirz` | Description "Profile README", a one-line README to start | | |
 | 5 | Profile README | A PR in `djwirz/djwirz`, from the kit's `templates/github-profile-readme.md` and the record only | | |
 | 6 | `holdfast`: website, topics | https://holdfast-production-ba968615.up.railway.app · typescript, nodejs, postgresql, stripe, redis, server-sent-events, playwright, opentelemetry | | |
