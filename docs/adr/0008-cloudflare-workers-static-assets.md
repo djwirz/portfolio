@@ -22,7 +22,7 @@ Checked against Cloudflare's current docs (2026-11-23):
 Option 1. `wrangler.jsonc` declares an assets-only Worker serving `./dist`, with `not_found_handling: "404-page"` (so `src/pages/404.astro` is the not-found page). Wrangler is pinned as a dev dependency. Build settings live in the Workers project:
 - build command `pnpm build`;
 - deploy command `npx wrangler deploy` (the default);
-- the build variable `SITE_URL`.
+- no build variables: the site URL comes from `links.site` in the record (`astro.config.mjs`), and `SITE_URL` only overrides it.
 
 Why: it's what Cloudflare provisioned and now recommends, everything ADR 0004 needed still holds, and the config is in the repo rather than only in a dashboard.
 

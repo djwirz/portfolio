@@ -2,10 +2,13 @@
 import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 
-// SITE_URL is set once the site is deployed (spec §13, slice 4). The placeholder keeps
-// canonical URLs, robots.txt and the sitemap well-formed until then; replacing it is a
-// go-live item (spec §14).
-const site = process.env.SITE_URL ?? "https://portfolio-placeholder.pages.dev";
+import { readFileSync } from "node:fs";
+
+// The site's URL comes from the record (links.site, ADR 0008), so canonical URLs,
+// robots.txt, the sitemap and og:image are right without a build variable. SITE_URL
+// overrides it (for example, for a custom domain before the record changes).
+const record = JSON.parse(readFileSync(new URL("./portfolio.json", import.meta.url), "utf8"));
+const site = process.env.SITE_URL ?? record.links?.site ?? "https://example.invalid";
 
 export default defineConfig({
   site,

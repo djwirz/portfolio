@@ -38,7 +38,7 @@ Cloudflare Workers with static assets, built by Workers Builds from this repo (A
 | Production branch | `main` |
 | Build command | `pnpm build` |
 | Deploy command | `npx wrangler deploy` (the default; uses the Wrangler pinned in `package.json`) |
-| Build variable `SITE_URL` | `https://djwirz.withered-smoke-b9b4.workers.dev` |
+| Build variable `SITE_URL` | Not needed: the build reads `links.site` from `portfolio.json`. Set it only to override |
 
 Node comes from `.nvmrc`, and pnpm from `packageManager`. Response headers are in `public/_headers`. The link-preview image is `public/og.png`, drawn from `docs/og.svg`.
 
