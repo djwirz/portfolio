@@ -245,6 +245,28 @@
       "evidence": []
     },
     {
+      "name": "Crapless",
+      "one_liner": "A phone-first crapless craps table to share with friends; play money only, one player so far",
+      "status": "building",
+      "backs": [],
+      "url": "https://crapless.onrender.com",
+      "repo": "https://github.com/djwirz/crapless",
+      "depth": 1,
+      "skills": [
+        "Python",
+        "FastAPI",
+        "TypeScript",
+        "React",
+        "WebSockets",
+        "CI/CD"
+      ],
+      "evidence": [
+        "House-edge and property tests of the rules engine",
+        "ADRs 0001 to 0009",
+        "CI on pull requests"
+      ]
+    },
+    {
       "name": "holdfast-ex",
       "one_liner": "Holdfast's problem solved again in Elixir/OTP: one process per auction, an append-only event log, holds derived from state",
       "status": "planned",
