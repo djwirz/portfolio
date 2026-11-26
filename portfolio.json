@@ -202,6 +202,30 @@
         "ADRs 0001 to 0009 and a runbook"
       ],
       "case_study": "case-studies/crapless.md"
+    },
+    {
+      "name": "bid-storm",
+      "one_liner": "A Go load generator that records every stage of a storm of auction bids against a local Holdfast, then checks the recording; a live page shows one recorded storm",
+      "status": "live",
+      "backs": [],
+      "url": "https://bid-storm.pages.dev",
+      "repo": "https://github.com/djwirz/bid-storm",
+      "depth": 3,
+      "skills": [
+        "Go",
+        "Load testing",
+        "Server-Sent Events",
+        "Python",
+        "DuckDB",
+        "TypeScript",
+        "CI/CD"
+      ],
+      "evidence": [
+        "Checks over a published recording, each with what it can't show",
+        "CI storms a pinned Holdfast and requires a broken copy to fail",
+        "ADRs 0001 to 0009"
+      ],
+      "case_study": "case-studies/bid-storm.md"
     }
   ],
   "in_flight": [
@@ -225,25 +249,6 @@
         "FHIR",
         "Evals",
         "LLM APIs"
-      ],
-      "evidence": []
-    },
-    {
-      "name": "bid-storm",
-      "one_liner": "A Go load generator that records every stage of a storm of auction bids against a local Holdfast, then checks the recording; a live page shows one recorded storm",
-      "status": "building",
-      "backs": [],
-      "url": "https://bid-storm.pages.dev",
-      "repo": "https://github.com/djwirz/bid-storm",
-      "depth": 1,
-      "skills": [
-        "Go",
-        "Load testing",
-        "Server-Sent Events",
-        "Python",
-        "DuckDB",
-        "TypeScript",
-        "CI/CD"
       ],
       "evidence": []
     },
