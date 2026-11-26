@@ -179,6 +179,29 @@
         "CI with OIDC deploys"
       ],
       "case_study": "case-studies/token-keeper.md"
+    },
+    {
+      "name": "Crapless",
+      "one_liner": "A crapless craps table for friends: join by link on a phone, take a seat, pass the dice; play money only",
+      "status": "live",
+      "backs": [],
+      "url": "https://crapless.onrender.com",
+      "repo": "https://github.com/djwirz/crapless",
+      "depth": 3,
+      "skills": [
+        "Python",
+        "FastAPI",
+        "TypeScript",
+        "React",
+        "WebSockets",
+        "CI/CD"
+      ],
+      "evidence": [
+        "House edge of every bet checked against textbook values",
+        "Server and two-phone browser tests in CI",
+        "ADRs 0001 to 0009 and a runbook"
+      ],
+      "case_study": "case-studies/crapless.md"
     }
   ],
   "in_flight": [
@@ -243,28 +266,6 @@
         "FHIR"
       ],
       "evidence": []
-    },
-    {
-      "name": "Crapless",
-      "one_liner": "A phone-first crapless craps table to share with friends; play money only, one player so far",
-      "status": "building",
-      "backs": [],
-      "url": "https://crapless.onrender.com",
-      "repo": "https://github.com/djwirz/crapless",
-      "depth": 1,
-      "skills": [
-        "Python",
-        "FastAPI",
-        "TypeScript",
-        "React",
-        "WebSockets",
-        "CI/CD"
-      ],
-      "evidence": [
-        "House-edge and property tests of the rules engine",
-        "ADRs 0001 to 0009",
-        "CI on pull requests"
-      ]
     },
     {
       "name": "holdfast-ex",
