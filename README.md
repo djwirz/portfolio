@@ -7,7 +7,7 @@ Dan Wirz's career record and the site built from it. The record (`portfolio.json
 ## How it fits together
 - **The record:** the [ai-era-job-kit](https://github.com/Vets-Who-Code/ai-era-job-kit)'s portfolio format, with two extra fields (`status`, `backs`) and an `in_flight` list for projects that haven't shipped ([ADR 0006](docs/adr/0006-status-and-backs-fields-and-in-flight-projects.md)).
 - **The site:** every page pre-rendered to static HTML with Astro ([ADR 0003](docs/adr/0003-pre-render-every-page-with-astro.md)), hosted on Cloudflare Pages ([ADR 0004](docs/adr/0004-host-on-cloudflare-pages.md)).
-- **The projects:** [Holdfast](https://github.com/djwirz/holdfast), [Token Keeper](https://github.com/djwirz/token-keeper), [FHIR over MCP](https://github.com/djwirz/fhir-over-mcp), [Coverage Check](https://github.com/djwirz/coverage-check) and [holdfast-ex](https://github.com/djwirz/holdfast-ex), each its own repo.
+- **The projects:** [Holdfast](https://github.com/djwirz/holdfast), [Token Keeper](https://github.com/djwirz/token-keeper), [FHIR over MCP](https://github.com/djwirz/fhir-over-mcp), [Coverage Check](https://github.com/djwirz/coverage-check) and [holdfast-ex](https://github.com/djwirz/holdfast-ex), each its own repo, plus [synthetic-cohort](https://github.com/djwirz/synthetic-cohort), the synthetic patient data that FHIR over MCP and Coverage Check are to share.
 
 ## Run it locally
 Needs Node 22.23 or later (CI uses `.nvmrc`) and pnpm (`corepack enable`, or any install of the version in `package.json`).
