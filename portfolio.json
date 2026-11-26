@@ -230,16 +230,20 @@
     },
     {
       "name": "bid-storm",
-      "one_liner": "A Go load generator that sends a storm of bids at a local Holdfast and records each bid, its simulated card hold and the live stream; checks and a results site come next",
+      "one_liner": "A Go load generator that records every stage of a storm of auction bids against a local Holdfast, then checks the recording; a live page shows one recorded storm",
       "status": "building",
       "backs": [],
-      "url": "",
+      "url": "https://bid-storm.pages.dev",
       "repo": "https://github.com/djwirz/bid-storm",
       "depth": 1,
       "skills": [
         "Go",
         "Load testing",
-        "Server-Sent Events"
+        "Server-Sent Events",
+        "Python",
+        "DuckDB",
+        "TypeScript",
+        "CI/CD"
       ],
       "evidence": []
     },
