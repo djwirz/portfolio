@@ -184,7 +184,7 @@
   "in_flight": [
     {
       "name": "FHIR over MCP",
-      "one_liner": "A read-only, patient-scoped MCP server over synthetic FHIR data, with an eval suite that checks every claim",
+      "one_liner": "A read-only, patient-scoped MCP server over synthetic FHIR data, with an eval suite that checks every claim; its patients are moving to the shared synthetic-cohort package",
       "status": "building",
       "backs": [
         {
@@ -207,7 +207,7 @@
     },
     {
       "name": "Coverage Check",
-      "one_liner": "Bulk insurance eligibility checks against an unreliable, rate-limited payer, with FHIR output, on Kubernetes",
+      "one_liner": "Bulk insurance eligibility checks against an unreliable, rate-limited payer, with FHIR output, on Kubernetes; its members will come from the shared synthetic-cohort package",
       "status": "planned",
       "backs": [
         {
@@ -226,6 +226,21 @@
         "FHIR",
         "Kubernetes",
         "Docker"
+      ],
+      "evidence": []
+    },
+    {
+      "name": "synthetic-cohort",
+      "one_liner": "One byte-reproducible set of synthetic Synthea patients and made-up insurance coverage, for FHIR over MCP and Coverage Check to share",
+      "status": "building",
+      "backs": [],
+      "url": "",
+      "repo": "https://github.com/djwirz/synthetic-cohort",
+      "depth": 1,
+      "skills": [
+        "Python",
+        "Synthea",
+        "FHIR"
       ],
       "evidence": []
     },
