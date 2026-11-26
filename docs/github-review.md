@@ -21,6 +21,7 @@ State read on 2026-11-23 with `gh` (read-only): no bio, no website, location "Mi
 | 11 | `portfolio`: website | https://djwirz.withered-smoke-b9b4.workers.dev | yes | yes |
 | 12 | Pins | Already done by Dan: all five projects plus `portfolio` are pinned (read 2026-11-23). They show as coverage-check, fhir-over-mcp, holdfast, holdfast-ex, token-keeper, portfolio; matching the site's order (holdfast, token-keeper, fhir-over-mcp, coverage-check, holdfast-ex) means dragging them in the GitHub UI, if Dan wants that | yes | yes |
 | 13 | Pins: `synthetic-cohort` replaces `holdfast-ex` | Six slots were full. Dan chose to unpin `holdfast-ex` (2026-11-26). Pinned now: coverage-check, fhir-over-mcp, holdfast, token-keeper, portfolio, synthetic-cohort | yes | yes |
+| 14 | Pins: `bid-storm` and `crapless` replace `fhir-over-mcp` and `synthetic-cohort` | Done by Dan in the GitHub UI. Pinned now (read 2026-11-26): coverage-check, holdfast, token-keeper, portfolio, bid-storm, crapless | yes | yes |
 
 Topics come from each project's `skills[]` in `portfolio.json`, lowercased and hyphenated. A topic says what a repo uses; it doesn't claim the skill is proven (ADR 0006).
 
