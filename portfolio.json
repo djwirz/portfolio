@@ -229,6 +229,21 @@
       "evidence": []
     },
     {
+      "name": "bid-storm",
+      "one_liner": "A Go load generator that sends a storm of bids at a local Holdfast and records each bid, its simulated card hold and the live stream; checks and a results site come next",
+      "status": "building",
+      "backs": [],
+      "url": "",
+      "repo": "https://github.com/djwirz/bid-storm",
+      "depth": 1,
+      "skills": [
+        "Go",
+        "Load testing",
+        "Server-Sent Events"
+      ],
+      "evidence": []
+    },
+    {
       "name": "Coverage Check",
       "one_liner": "Bulk insurance eligibility checks against an unreliable, rate-limited payer, with FHIR output, on Kubernetes; its members will come from the shared synthetic-cohort package",
       "status": "planned",
