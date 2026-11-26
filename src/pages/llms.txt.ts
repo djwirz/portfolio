@@ -28,7 +28,7 @@ export const GET: APIRoute = ({ site }) => {
     `- [Recruiter fast lane](${url("/recruiters/")}): key facts and contact`,
     `- [Résumé](${url("/resume/")})`,
     `- [About](${url("/about/")})`,
-    `- [How I build](${url("/how-i-build/")}): the method, including where the AI was wrong`,
+    `- [How I build](${url("/how-i-build/")}): the method, including what went wrong`,
     "",
   ];
   return new Response(lines.join("\n"), { headers: { "Content-Type": "text/plain; charset=utf-8" } });

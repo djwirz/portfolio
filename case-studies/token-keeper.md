@@ -5,7 +5,7 @@
 ## The story
 **Context.** Apps that act on a user's third-party account all need the same unglamorous machinery: run the OAuth consent, store tokens safely, refresh them before they expire, notice when the user revokes access, and tell the product what state each connection is in. Token Keeper is that machinery as a small connector service for one provider, GitHub. It's a public version of patterns I used for partner OAuth at Propeller Health and for Instagram handle verification at HYP. Instagram's long-lived token and GitHub's user tokens pose the same problem, a credential that lapses at a hard cliff unless it's renewed, and GitHub adds a twist: each refresh token works only once.
 
-**My role and constraints.** Built by me with Claude Code, in the open, on my own AWS account with a budget alarm created before the first deploy, and against my own GitHub account. The project had to prove four things: the refresh lifecycle survives concurrency, tokens stay safe, it's deployed and operable, and a viewer can see it working. One provider, one deployed environment, no token vending.
+**My role and constraints.** Solo project, AI-assisted (Claude Code). Built on my own AWS account with a budget alarm created before the first deploy, and against my own GitHub account. The project had to prove four things: the refresh lifecycle survives concurrency, tokens stay safe, it's deployed and operable, and a viewer can see it working. One provider, one deployed environment, no token vending.
 
 **Key decisions.**
 1. **A GitHub App with expiring user tokens and no permissions.** Public data needs none, and the 8-hour and 6-month tokens give something real to keep alive. ([ADR 0002](https://github.com/djwirz/token-keeper/blob/main/docs/adr/0002-github-app-with-expiring-user-tokens.md))
@@ -15,7 +15,7 @@
 5. **AWS CDK in Python instead of Terraform:** one language across the repo, with least-privilege IAM grants that are unit-tested. ([ADR 0006](https://github.com/djwirz/token-keeper/blob/main/docs/adr/0006-aws-cdk-python-for-iac.md))
 6. **Instant revocation through GitHub's App webhook,** so revoking access in GitHub's settings flips the account within seconds. ([ADR 0010](https://github.com/djwirz/token-keeper/blob/main/docs/adr/0010-github-revocation-webhook.md))
 
-**What went wrong.** Most mistakes were the AI's, and they fell into patterns:
+**What went wrong.** The mistakes fell into patterns:
 - **Tests that claimed more than they checked.** A concurrency test for a stale read had nothing stale in it; a deliberate mutation passed every test until it was rewritten, and mutation checks became routine after that. A token-in-logs test left third-party loggers below the level it claimed.
 - **Confident claims about other systems that were wrong.** An OIDC trust scoped to both a branch and an environment couldn't work, because GitHub's token carries no branch when a job uses an environment. A claim that an AWS feature was free would have forced a paid plan; I caught it before clicking.
 - **Bugs only a real deploy or browser showed,** such as a content security policy that blocked the redirect to GitHub, twice.

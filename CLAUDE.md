@@ -22,7 +22,7 @@ All five slices are done (spec §13): live at https://djwirz.withered-smoke-b9b4
 - Every decision that would be expensive to reverse gets an ADR in `docs/adr/` (format: ADR 0001). Don't decide silently in code.
 - ADRs are written as `Accepted` in the PR that adds them; merging is the acceptance. Never rewrite a merged ADR's decision: add a new ADR that supersedes it.
 - When the spec and the code disagree, stop and ask; update the spec in the same PR if the decision changes.
-- Built with Claude Code in the open: /how-i-build/ and each case study get a section on how AI was used and where it was wrong, so note real mistakes in PR descriptions. Mark anything written from memory rather than current docs as "verify".
+- Built with Claude Code. /how-i-build/ explains the method; each case study says AI-assisted once, briefly, and lists mistakes under "What went wrong" without attributing them to the AI. Note real mistakes in PR descriptions. Mark anything written from memory rather than current docs as "verify".
 - **Every outward-facing GitHub change is its own approval from Dan:** creating a repo, changing a repo's settings or visibility, pinning, setting the profile. Prepare the exact change and wait for a yes on each one. The same goes for creating accounts or tokens on the host.
 
 ## The record
