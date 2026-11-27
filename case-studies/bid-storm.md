@@ -17,11 +17,10 @@
 
 **What went wrong.** The converter stored bidder numbers as text, and its tests passed because none checked column types. The site's data showed it.
 
-**Result.** The page is live and shows one recorded storm: a few hundred bids from a few dozen synthetic bidders, one agreed order, and every accepted bid held before any subscriber heard of it.
+**Result.** The page is live and shows one recorded storm: a few hundred bids from a few dozen synthetic bidders, one agreed order, and every accepted bid held before any subscriber heard of it. It also shows where each bid's time went and a story for each injected fault, and a second page shows sweeps over request rate, hold delay and decline rate.
 
 ## The evidence
 - The recording passes every check, and the page says beside each one what it can't show.
 - CI storms a pinned Holdfast on every pull request, checks the recording, then breaks a copy and requires the check to fail.
 - Unit tests in Go, Python and TypeScript, browser and accessibility tests on the page, and a secret scan.
 - Known limits: one run on one laptop, a payment fake rather than Stripe, and nothing measured about capacity or the network.
-- Next: latency, then failures and recovery, then sweeps.
