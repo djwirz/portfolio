@@ -205,7 +205,7 @@
     },
     {
       "name": "bid-storm",
-      "one_liner": "A Go load generator that records every stage of a storm of auction bids against a local Holdfast, then checks the recording; a live page shows one recorded storm",
+      "one_liner": "A Go load generator that records every stage of a storm of auction bids against a local Holdfast, then checks the recording; a live page shows a recorded storm and sweeps",
       "status": "live",
       "backs": [],
       "url": "https://bid-storm.pages.dev",
@@ -231,7 +231,7 @@
   "in_flight": [
     {
       "name": "FHIR over MCP",
-      "one_liner": "A read-only, patient-scoped MCP server over synthetic FHIR data, with an eval suite that checks every claim; its patients are moving to the shared synthetic-cohort package",
+      "one_liner": "A read-only, patient-scoped MCP server over synthetic FHIR data, with an eval suite that checks every claim; its patients come from the shared synthetic-cohort package",
       "status": "building",
       "backs": [
         {
@@ -254,8 +254,8 @@
     },
     {
       "name": "Coverage Check",
-      "one_liner": "Bulk insurance eligibility checks against an unreliable, rate-limited payer, with FHIR output, on Kubernetes; its members will come from the shared synthetic-cohort package",
-      "status": "planned",
+      "one_liner": "Bulk insurance eligibility checks against an unreliable, rate-limited payer, with FHIR output, on Kubernetes; its members come from the shared synthetic-cohort package",
+      "status": "building",
       "backs": [
         {
           "story": "insurance-eligibility-automation",
@@ -265,7 +265,7 @@
       ],
       "url": "",
       "repo": "https://github.com/djwirz/coverage-check",
-      "depth": 0,
+      "depth": 1,
       "skills": [
         "Python",
         "FastAPI",
@@ -274,7 +274,9 @@
         "Kubernetes",
         "Docker"
       ],
-      "evidence": []
+      "evidence": [
+        "Correct under chaos on a local Kubernetes cluster while pods are killed"
+      ]
     },
     {
       "name": "synthetic-cohort",
@@ -294,7 +296,7 @@
     {
       "name": "holdfast-ex",
       "one_liner": "Holdfast's problem solved again in Elixir/OTP: one process per auction, an append-only event log, holds derived from state",
-      "status": "planned",
+      "status": "building",
       "backs": [
         {
           "story": "real-time-bidding-stripe-holds",
@@ -304,7 +306,7 @@
       ],
       "url": "",
       "repo": "https://github.com/djwirz/holdfast-ex",
-      "depth": 0,
+      "depth": 1,
       "skills": [
         "Elixir",
         "OTP",
@@ -312,7 +314,10 @@
         "PostgreSQL",
         "Stripe"
       ],
-      "evidence": []
+      "evidence": [
+        "Property tests of the pure core",
+        "Holdfast's page and storm run against it, with payments still a stand-in"
+      ]
     },
     {
       "name": "Respiratory view",
